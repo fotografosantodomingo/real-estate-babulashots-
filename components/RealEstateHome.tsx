@@ -51,7 +51,7 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
     <main>
       <SeoJsonLd data={schema} />
       <section className="hero">
-        <Image src={assetPath("/images/real-estate-media-dominican-republic.webp")} alt={isEnglish ? "Real estate photography and video in Dominican Republic" : "Fotografia y video inmobiliario en Republica Dominicana"} width={1672} height={941} priority fetchPriority="high" className="hero-image" />
+        <Image src={assetPath("/images/real-estate-media-dominican-republic.webp")} alt={isEnglish ? "Real estate photography and video in Dominican Republic" : "Fotografia y video inmobiliario en Republica Dominicana"} width={1400} height={788} priority fetchPriority="high" className="hero-image" />
         <div className="hero-content">
           <p className="eyebrow">Babula Shots · Real Estate Media</p>
           <h1>{isEnglish ? "Real estate photography in Dominican Republic" : "Fotografia inmobiliaria en Republica Dominicana"}</h1>

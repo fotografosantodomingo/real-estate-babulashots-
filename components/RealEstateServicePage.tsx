@@ -78,7 +78,7 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
     <main>
       <SeoJsonLd data={schema} />
       <section className="hero service-hero">
-        <Image src={assetPath("/images/real-estate-media-dominican-republic.webp")} alt={isEnglish ? service.enH1 : service.h1} width={1672} height={941} priority fetchPriority="high" className="hero-image" />
+        <Image src={assetPath("/images/real-estate-media-dominican-republic.webp")} alt={isEnglish ? service.enH1 : service.h1} width={1400} height={788} priority fetchPriority="high" className="hero-image" />
         <div className="hero-content">
           <p className="eyebrow">Babula Shots · Service</p>
           <h1>{isEnglish ? service.enH1 : service.h1}</h1>
