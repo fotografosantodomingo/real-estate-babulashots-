@@ -1,12 +1,15 @@
 # Inmobiliaria Babula Shots Production Plan
 
-Domain: https://inmobiliaria.babulashotsrd.com
+Recommended production URL: https://babulashotsrd.com/inmobiliaria/
+Fallback URL only if subfolder deployment is not possible: https://inmobiliaria.babulashotsrd.com
 Repository: git@github.com:fotografosantodomingo/real-estate-babulashots-.git
 Local path: /Users/subdomainsbabulashots/Documents/inmobiliaria
 
 ## Goal
 
-Create a production-ready SEO and lead-generation website for Babula Shots real estate media services in the Dominican Republic. The site should be stronger than boda.babulashotsrd.com by combining static SEO speed, richer schema, deeper topical authority, clearer conversion paths, better service segmentation, and a content structure built for real estate agents, brokers, developers, Airbnb hosts, villa owners, hotels, and property investors.
+Create a production-ready SEO and lead-generation website for Babula Shots real estate media services in the Dominican Republic. The goal is to compete for #1 Google rankings in the most valuable real estate media searches by combining static SEO speed, consolidated domain authority, richer schema, deeper topical authority, clearer conversion paths, better service segmentation, stronger proof, and a content structure built for real estate agents, brokers, developers, Airbnb hosts, villa owners, hotels, and property investors.
+
+No SEO plan can guarantee #1 rankings, but the architecture should remove avoidable disadvantages before the first line of production code is written.
 
 The site must position Babula Shots as a professional real estate media partner, not only a photographer. The offer includes photography, video, drone, reels, walkthroughs, social media content, listing media, developer content, rental property content, and visual marketing for properties.
 
@@ -61,6 +64,7 @@ Stack:
 - Next.js static export
 - TypeScript
 - App Router
+- basePath configured for /inmobiliaria when deployed as a subfolder
 - Static route generation
 - Static sitemap generation
 - Static robots configuration
@@ -71,6 +75,50 @@ Stack:
 - No third-party scripts in the initial build unless they are deferred and measured
 - Strong internal linking from data files
 - Bilingual Spanish and English routes
+
+## SEO Architecture Decision
+
+Preferred architecture:
+
+```text
+https://babulashotsrd.com/inmobiliaria/
+```
+
+Use the real estate site as a subfolder on the main Babula Shots domain whenever technically possible. This keeps brand authority, internal links, Search Console reporting, and crawl discovery under one primary domain.
+
+Avoid this unless there is a hard technical or business reason:
+
+```text
+https://inmobiliaria.babulashotsrd.com/
+```
+
+Google can crawl and rank both subdomains and subfolders, but subfolders are the stronger practical choice for this project because the real estate service is part of the same Babula Shots brand. A subdomain should only be used if the real estate operation must be technically isolated, managed as a separate property, or prepared for a future sale.
+
+Dedicated-root-domain alternative:
+
+```text
+https://fotografoinmobiliariord.com/
+```
+
+Only consider a separate root domain if the long-term plan is to build and possibly sell a standalone real estate media brand. If the goal is maximum Babula Shots authority, use the subfolder.
+
+Next.js deployment requirement:
+
+```js
+// next.config.mjs
+const nextConfig = {
+  output: "export",
+  basePath: "/inmobiliaria",
+  trailingSlash: true,
+  images: {
+    unoptimized: true
+  }
+};
+
+export default nextConfig;
+```
+
+If Cloudflare Pages cannot directly serve this repo from the main domain subfolder, use a Cloudflare Worker or Pages routing rule to serve the static export under /inmobiliaria without changing canonical URLs.
 
 Recommended project structure:
 
@@ -91,6 +139,10 @@ components/
   RealEstateServicePage.tsx
   RealEstateIndustryPage.tsx
   RealEstateBlogPage.tsx
+  BeforeAfterSlider.tsx
+  PropertyGallery.tsx
+  ClientLogos.tsx
+  Integrations.tsx
   ConversionPanel.tsx
   ServicePackages.tsx
   ProofStrip.tsx
@@ -116,6 +168,15 @@ public/
 ## URL Strategy
 
 Use clean Spanish routes for the main site and English routes under /en/. Keep slugs consistent, short, and search-focused. Each route must have one exact language pair in routeMap.ts so the language switcher never points to weak or unrelated pages.
+
+When deployed under the recommended subfolder, all canonical routes are prefixed with /inmobiliaria:
+
+```text
+/inmobiliaria/fotografia-inmobiliaria-punta-cana/
+/inmobiliaria/en/real-estate-photography-punta-cana/
+```
+
+Inside data files, store slugs without the basePath and generate canonical URLs with a central helper so the site can be moved between subfolder and fallback subdomain without manually rewriting every route.
 
 Homepage:
 - /
@@ -229,6 +290,9 @@ Each service page must include:
 - Deliverables
 - Turnaround expectations
 - Recommended add-ons
+- MLS, Point2Homes, Airbnb, and listing-platform formatting note where relevant
+- Before/after proof or visual examples
+- Property gallery
 - City/service internal links
 - FAQ
 - CTA
@@ -304,9 +368,11 @@ Every SEO landing page should include:
 - One clear H1 matching search intent
 - Above-the-fold CTA
 - Short proof/credibility strip
+- Client logo or platform trust strip where truthful
 - Local/service-specific intro
 - Deliverables section
 - Property types served
+- Visual proof section
 - Process section
 - Package or quote guidance
 - Related city/service links
@@ -317,6 +383,7 @@ Every SEO landing page should include:
 
 Homepage sections:
 - Hero with exact service promise
+- Client logos or trust strip
 - Service categories
 - Cities served
 - Client segments
@@ -327,6 +394,52 @@ Homepage sections:
 - Final CTA
 
 Avoid visible educational text that explains how to use the site. The interface should be direct and professional.
+
+## Visual-First B2B Content Rules
+
+Real estate pages should sell through proof, clarity, and speed. Agents and developers need to see whether the media will help them list, rent, sell, or launch a property.
+
+Content length targets:
+- Service pages: 350-500 words, supported by galleries, before/after sliders, deliverables, turnaround, and CTA.
+- City pages: 500-700 words, with at least 50% of the perceived page value coming from local property visuals, service cards, and conversion sections.
+- Industry pages: 500-700 words, focused on the client segment's workflow and pain points.
+- Blog guides: 1,000+ words when the topic is educational and search intent supports depth.
+
+Service and city pages should prioritize:
+- Portfolio examples
+- Before/after edits
+- Fast deliverables
+- Platform-ready formats
+- Prices or quote paths
+- Exact property types
+- Trust signals
+
+Avoid long essay-style service pages. If extra explanation is useful, move it into blog guides and link to the guide from the service page.
+
+## Trust and Proof Architecture
+
+Real estate is a B2B trust market. The site needs proof components from the first build.
+
+Required components:
+- ClientLogos.tsx
+- Integrations.tsx
+- ProofStrip.tsx
+- BeforeAfterSlider.tsx
+- PropertyGallery.tsx
+
+ClientLogos.tsx:
+- Show real client, brokerage, developer, hotel, or platform relationships only when truthful and contractually allowed.
+- If logo permission is uncertain, use neutral wording such as "Media prepared for agents, brokers, developers, Airbnb hosts, and villa owners across RD" instead of unauthorized logos.
+
+Integrations.tsx:
+- State that deliverables can be formatted for MLS-style listings, Point2Homes, Airbnb, social reels, website galleries, Google Business Profile, brochures, and developer launch campaigns.
+- Do not claim official integration or partnership unless it exists.
+
+Required conversion wording on relevant pages:
+
+```text
+Photos and video can be delivered in formats ready for MLS-style listings, Point2Homes, Airbnb, social media, websites, and developer sales campaigns.
+```
 
 ## Conversion and CRM Plan
 
@@ -370,6 +483,54 @@ CRM readiness:
 - Do not hardcode a heavy CRM script in the first release.
 - Prefer serverless/static-compatible form handling later if needed.
 
+## Dynamic WhatsApp CTA Requirements
+
+Every route object in routeMap.ts must include a whatsappMessage. ConversionPanel.tsx must use that exact page-specific message in the wa.me text parameter.
+
+Example route object:
+
+```ts
+{
+  slug: "fotografia-inmobiliaria-punta-cana",
+  enSlug: "real-estate-photography-punta-cana",
+  type: "city",
+  whatsappMessage:
+    "Hola, vengo de su web. Necesito cotizacion para fotografiar una villa, apartamento o resort en Punta Cana. Tienen disponibilidad esta semana?"
+}
+```
+
+Required examples:
+
+Punta Cana city page:
+
+```text
+Hola, vengo de su web. Necesito cotizacion para fotografiar una villa, apartamento o resort en Punta Cana. Tienen disponibilidad esta semana?
+```
+
+Developer content page:
+
+```text
+Hola, busco agencia de contenido para lanzamiento de proyecto inmobiliario en Santo Domingo. Podemos agendar una llamada?
+```
+
+Airbnb/villa page:
+
+```text
+Hola, necesito fotos profesionales para mi Airbnb o villa en Republica Dominicana. Cual es el precio por propiedad?
+```
+
+Drone page:
+
+```text
+Hola, necesito foto o video con drone para una propiedad en Republica Dominicana. Me pueden enviar opciones y disponibilidad?
+```
+
+Pricing page:
+
+```text
+Hola, vengo de la pagina de precios. Quiero cotizar foto, video o drone para una propiedad. Me pueden orientar?
+```
+
 ## Schema Strategy
 
 Use JSON-LD by page type. Every schema block should be valid, minimal, and specific.
@@ -395,7 +556,7 @@ City pages:
 - WebPage
 - BreadcrumbList
 - FAQPage
-- areaServed using city/region
+- areaServed using city, province, and country nesting
 
 Service pages:
 - Service
@@ -424,6 +585,48 @@ Rules:
 - Do not use Product schema for services unless there is a fixed purchasable package.
 - Keep schema content aligned with visible page content.
 - Validate with Google Rich Results Test and Schema.org validator.
+
+City areaServed pattern:
+
+```json
+"areaServed": {
+  "@type": "City",
+  "name": "Punta Cana",
+  "containedInPlace": {
+    "@type": "State",
+    "name": "La Altagracia",
+    "containedInPlace": {
+      "@type": "Country",
+      "name": "Dominican Republic"
+    }
+  }
+}
+```
+
+Homepage service catalog pattern:
+
+```json
+"hasOfferCatalog": {
+  "@type": "OfferCatalog",
+  "name": "Real Estate Media Services",
+  "itemListElement": [
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Real Estate Photography"
+      }
+    },
+    {
+      "@type": "Offer",
+      "itemOffered": {
+        "@type": "Service",
+        "name": "Drone Real Estate Video"
+      }
+    }
+  ]
+}
+```
 
 ## Internal Linking
 
@@ -474,13 +677,16 @@ Asset categories:
 
 Image requirements:
 - WebP, with AVIF optional later
-- Hero images generally under 180 KB where possible
-- Supporting images generally under 120 KB
+- Interior WebP images up to 200 KB when needed for clean walls, accurate color, and reduced banding
+- Exterior and drone WebP images generally under 150 KB where possible
+- Hero images generally under 200 KB where possible
+- Supporting images generally under 150 KB
 - Thumbnails under 60 KB
 - Explicit dimensions or aspect-ratio
 - Descriptive filenames
 - Descriptive alt text
 - No dark, generic, or overly cropped images where the property should be inspected
+- Do not compress interiors so aggressively that walls, windows, shadows, or room edges show visible artifacts
 
 ## Lighthouse / Quality Gates
 
@@ -489,7 +695,7 @@ Build must pass:
 - TypeScript compile
 - No broken internal links
 - Sitemap includes every canonical route
-- Robots points to https://inmobiliaria.babulashotsrd.com/sitemap.xml
+- Robots points to https://babulashotsrd.com/inmobiliaria/sitemap.xml when using the recommended subfolder architecture
 - Lighthouse desktop target: 100/100/100/100
 - Lighthouse mobile target: as close to 100 as practical, with no critical SEO/accessibility failures
 
@@ -523,6 +729,13 @@ SEO rules:
 - Structured data per page type
 - No duplicate thin city pages
 
+Ranking-readiness rules:
+- Do not launch city pages without relevant local visuals or at least a truthful placeholder strategy.
+- Do not rely on word count to rank service pages.
+- Do not ship generic WhatsApp messages.
+- Do not claim brokerage/developer logos without permission.
+- Do not use the subdomain as canonical unless the subfolder strategy is impossible.
+
 ## Redirects
 
 Prepare redirects for legacy, alternate, and typo-prone URLs:
@@ -539,6 +752,14 @@ Prepare redirects for legacy, alternate, and typo-prone URLs:
 /foto-video-propiedades/ /foto-video-inmobiliario/ 301
 /contenido-inmobiliario/ /contenido-para-agentes-inmobiliarios/ 301
 ```
+
+If moving from the originally planned subdomain to the recommended subfolder, add canonical redirects:
+
+```text
+https://inmobiliaria.babulashotsrd.com/* https://babulashotsrd.com/inmobiliaria/:splat 301
+```
+
+Exact Cloudflare syntax must be confirmed during deployment.
 
 ## Content Standards
 
@@ -590,7 +811,7 @@ Avoid:
 19. Commit initial production site.
 20. Push to GitHub remote.
 21. Connect Cloudflare Pages.
-22. Configure subdomain inmobiliaria.babulashotsrd.com.
+22. Configure /inmobiliaria routing on babulashotsrd.com, with the subdomain only as a fallback or redirect source.
 23. Submit sitemap in Google Search Console.
 24. Track indexed pages and improve content based on impressions.
 
@@ -599,11 +820,18 @@ Avoid:
 Milestone 1: Foundation
 - Next.js setup
 - Static export
+- basePath /inmobiliaria
 - Header/footer
 - Theme/language controls
 - Core CSS
 - Sitemap/robots
 - Headers/redirects
+- routeMap.ts with whatsappMessage on every route
+- ConversionPanel.tsx using dynamic WhatsApp messages
+- PropertyGallery.tsx
+- BeforeAfterSlider.tsx
+- ClientLogos.tsx
+- Integrations.tsx
 
 Milestone 2: Money Pages
 - Homepage
