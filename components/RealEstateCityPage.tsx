@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { ConversionPanel } from "@/components/ConversionPanel";
+import { FaqBlock } from "@/components/FaqBlock";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
@@ -85,6 +86,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
       <PropertyGallery locale={locale} />
       <BeforeAfterSlider locale={locale} />
       <Integrations locale={locale} />
+      <FaqBlock items={faq} />
 
       <section className="section">
         <div className="wrap split">

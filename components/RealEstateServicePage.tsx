@@ -4,6 +4,8 @@ import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { ConversionPanel } from "@/components/ConversionPanel";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
+import { FaqBlock } from "@/components/FaqBlock";
+import { ServicePackages } from "@/components/ServicePackages";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
 import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { servicePath, type RealEstateService } from "@/lib/realEstateServices";
@@ -12,6 +14,20 @@ import { assetPath, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib
 export function RealEstateServicePage({ service, locale = "es" }: { service: RealEstateService; locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
   const path = servicePath(service, locale);
+  const faq = [
+    {
+      question: isEnglish ? "How fast can the files be delivered?" : "Que tan rapido se entregan los archivos?",
+      answer: isEnglish ? "Delivery depends on property size and package, but real estate listings are prioritized for fast publication." : "La entrega depende del tamano de la propiedad y del paquete, pero los listados inmobiliarios se priorizan para publicacion rapida."
+    },
+    {
+      question: isEnglish ? "Can files be prepared for Airbnb, Point2Homes or listing portals?" : "Pueden preparar formatos para Airbnb, Point2Homes o portales?",
+      answer: isEnglish ? "Yes. Files can be exported for listing portals, Airbnb, websites, WhatsApp and social media." : "Si. Los archivos pueden exportarse para portales, Airbnb, websites, WhatsApp y redes sociales."
+    },
+    {
+      question: isEnglish ? "Can photo, video and drone be combined?" : "Se puede combinar foto, video y drone?",
+      answer: isEnglish ? "Yes. Photo, video, drone and reels can be combined into one property media package." : "Si. Foto, video, drone y reels pueden combinarse en un solo paquete de contenido inmobiliario."
+    }
+  ];
   const schema = [
     {
       "@context": "https://schema.org",
@@ -22,6 +38,15 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
       provider: { "@type": "ProfessionalService", name: "Babula Shots Inmobiliaria", telephone: phoneE164, url: siteUrl },
       areaServed: { "@type": "Country", name: "Dominican Republic" },
       offers: { "@type": "Offer", priceCurrency: "USD", availability: "https://schema.org/InStock" }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer }
+      }))
     }
   ];
 
@@ -55,8 +80,10 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
       </section>
 
       <PropertyGallery locale={locale} />
+      <ServicePackages locale={locale} />
       <BeforeAfterSlider locale={locale} />
       <Integrations locale={locale} />
+      <FaqBlock items={faq} />
 
       <section className="section">
         <div className="wrap">

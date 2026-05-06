@@ -5,6 +5,7 @@ import { ConversionPanel } from "@/components/ConversionPanel";
 import { Integrations } from "@/components/Integrations";
 import { ProofStrip } from "@/components/ProofStrip";
 import { PropertyGallery } from "@/components/PropertyGallery";
+import { ServicePackages } from "@/components/ServicePackages";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
 import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { realEstateIndustries, industryPath } from "@/lib/realEstateIndustries";
@@ -83,6 +84,7 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
       </section>
 
       <PropertyGallery locale={locale} />
+      <ServicePackages locale={locale} />
 
       <section className="section alt-section">
         <div className="wrap">

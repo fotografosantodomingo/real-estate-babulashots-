@@ -429,7 +429,8 @@ p {
 }
 
 .chip-list,
-.service-list {
+.service-list,
+.package-list {
   display: flex;
   flex-wrap: wrap;
   gap: .65rem;
@@ -439,11 +440,20 @@ p {
 }
 
 .chip-list li,
-.service-list li {
+.service-list li,
+.package-list li {
   border: 1px solid var(--line);
   background: var(--panel);
   padding: .68rem .82rem;
   font-weight: 680;
+}
+
+.package-card {
+  min-height: 280px;
+}
+
+.package-list {
+  margin-top: auto;
 }
 
 .related-links {

@@ -856,6 +856,177 @@ Milestone 4: Production QA
 - Redirect QA
 - Search Console submission
 
+## Google Domination Execution Plan
+
+The goal is to build the strongest realistic chance of ranking #1 for the planned real estate media keywords. This requires more than technical SEO. The site must combine search intent, local proof, schema accuracy, conversion behavior, and off-page authority.
+
+### Phase 1: Indexable Authority Foundation
+
+Status target before launch:
+- 100% static export.
+- All canonical URLs under https://babulashotsrd.com/inmobiliaria/.
+- Sitemap includes every Spanish and English page.
+- Robots points to the /inmobiliaria sitemap.
+- Every route has a title, meta description, canonical URL, hreflang pair, schema, FAQ where useful, and dynamic WhatsApp CTA.
+- No generic city pages.
+- No city page launches without relevant real estate visuals or a truthful gallery/portfolio fallback.
+
+Critical checks:
+- Confirm /inmobiliaria/ is technically possible on the main domain before using the subdomain as canonical.
+- If the subdomain must stay live temporarily, redirect it to the subfolder.
+- Submit only the final canonical sitemap to Google Search Console.
+
+### Phase 2: Money Keyword Pages
+
+Highest-priority ranking pages:
+- /inmobiliaria/fotografia-inmobiliaria-republica-dominicana/
+- /inmobiliaria/fotografia-inmobiliaria-santo-domingo/
+- /inmobiliaria/fotografia-inmobiliaria-punta-cana/
+- /inmobiliaria/foto-video-inmobiliario/
+- /inmobiliaria/video-inmobiliario-republica-dominicana/
+- /inmobiliaria/fotografia-drone-inmobiliaria/
+- /inmobiliaria/fotografia-para-airbnb-villas/
+- /inmobiliaria/precios-fotografia-inmobiliaria-republica-dominicana/
+
+Each money page must have:
+- One exact-intent H1.
+- Fast above-the-fold WhatsApp CTA.
+- Local/service proof within the first viewport.
+- Platform-ready deliverables: MLS-style listings, Point2Homes, Airbnb, social reels, websites, brochures, developer campaigns.
+- Portfolio gallery using real property work.
+- FAQ schema matching visible FAQ.
+- Internal links to related city, service, pricing, and guide pages.
+
+### Phase 3: Local Market Capture
+
+Priority local markets:
+- Santo Domingo
+- Punta Cana
+- Cap Cana
+- Casa de Campo
+- La Romana
+- Santiago
+- Bavaro
+- Las Terrenas
+- Samana
+- Puerto Plata
+- Bayahibe
+- Jarabacoa
+- Juan Dolio
+- Miches
+
+Local ranking requirements:
+- Mention province/city context accurately.
+- Use nested areaServed schema with City, State, and Country.
+- Include nearby areas and property types.
+- Show local-relevant visuals where possible.
+- Link each city to the national page, pricing page, and the most relevant service pages.
+- Add city-specific WhatsApp messages, not generic inquiry text.
+
+### Phase 4: Topical Authority Content
+
+Publish and improve blog clusters around:
+- Selling and renting faster.
+- Real estate media pricing.
+- Airbnb and villa photography.
+- Developer/project launches.
+- Drone, reels, and video.
+
+Blog goals:
+- Answer informational searches that agents and owners actually search before hiring.
+- Link every article to one parent money page, two service pages, two city pages, and pricing where natural.
+- Keep guides deep enough to be useful, usually 1,000+ words.
+- Avoid turning money pages into essays. Service pages should stay visual-first.
+
+### Phase 5: Proof and Conversion Signals
+
+Required proof upgrades:
+- Add more real property photos from approved Babula galleries.
+- Add client/broker/developer logos only when permission is clear.
+- Add neutral trust copy when logo permission is not clear.
+- Add before/after examples for editing, interiors, twilight, drone, or listing cleanup.
+- Add short case-study blocks when real results are available.
+
+Conversion rules:
+- Every important page must have a page-specific WhatsApp message.
+- CTAs must ask for the exact next action: quote, availability, package, or call.
+- Do not hide pricing guidance. If exact pricing cannot be published, show package direction and quote factors.
+
+### Phase 6: Schema and Rich Results QA
+
+Validate with:
+- Google Rich Results Test.
+- Schema.org validator.
+- Search Console enhancement reports after indexing.
+
+Schema rules:
+- Use ProfessionalService and Service for commercial pages.
+- Use Article for blog pages.
+- Use FAQPage only when FAQ is visible.
+- Use VideoObject only when a real video asset and thumbnail exist.
+- Do not add fake reviews, fake ratings, or unsupported claims.
+- Keep schema language aligned with visible page content.
+
+### Phase 7: Off-Page Authority
+
+Ranking #1 will likely require backlinks and citations, especially for Punta Cana, Santo Domingo, Airbnb, and developer keywords.
+
+Backlink targets:
+- Real estate agencies in Dominican Republic.
+- Developer project websites.
+- Airbnb/villa/property management partners.
+- Architecture and interior design partners.
+- Local business directories.
+- Tourism/villa rental blogs.
+- Spanish and English expat/investor resources.
+
+Linkable assets:
+- Real estate photography pricing guide.
+- Airbnb photo checklist.
+- Property preparation checklist.
+- Drone/video guide for listings.
+- Developer launch content guide.
+
+### Phase 8: Search Console Iteration
+
+After launch:
+- Submit sitemap.
+- Request indexing for the homepage and highest-priority money pages.
+- Monitor queries, impressions, CTR, and average position weekly.
+- Improve pages ranking positions 4-20 first because they are closest to page-one wins.
+- Rewrite titles/meta descriptions when impressions are high but CTR is low.
+- Add FAQs and stronger internal links where pages are indexed but not climbing.
+- Add more local proof where city pages get impressions but weak engagement.
+
+### Phase 9: Lighthouse and UX Guardrails
+
+Do not sacrifice performance for visual proof.
+
+Rules:
+- Keep hero images under the real estate image caps.
+- Lazy-load supporting gallery images.
+- Avoid heavy sliders and video embeds.
+- Use static thumbnails and link to video/portfolio pages when embeds hurt performance.
+- Maintain 100/100 SEO and accessibility.
+- Keep mobile layouts dense, professional, and readable.
+
+### Phase 10: Ranking Reality
+
+The site can be engineered to deserve top rankings, but Google position #1 also depends on:
+- Domain authority.
+- Backlinks.
+- Competitor strength.
+- Real user engagement.
+- Content freshness.
+- Search intent match.
+- Google Business/Profile signals if local results appear.
+
+The production standard is therefore:
+- Build the strongest technical and content foundation.
+- Launch with no avoidable SEO weakness.
+- Add real proof and backlinks monthly.
+- Use Search Console data to improve the pages that Google already tests.
+
 ## Git
 
 Local repo initialized at:
