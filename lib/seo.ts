@@ -1,6 +1,6 @@
-export const basePath = "/inmobiliaria";
-export const siteOrigin = "https://babulashotsrd.com";
-export const siteUrl = `${siteOrigin}${basePath}`;
+export const basePath = "";
+export const siteOrigin = "https://inmobiliaria.babulashotsrd.com";
+export const siteUrl = siteOrigin;
 export const phoneDisplay = "809 720 95 47";
 export const phoneE164 = "+18097209547";
 export const email = "info@babulashotsrd.com";
@@ -8,8 +8,8 @@ export const whatsappNumber = "18097209547";
 export const portfolioUrl = "https://babulashots.pic-time.com/client";
 
 export function withBasePath(path: string) {
-  if (path === "/") return `${basePath}/`;
-  return `${basePath}${path.startsWith("/") ? path : `/${path}`}`;
+  if (path === "/") return "/";
+  return path.startsWith("/") ? path : `/${path}`;
 }
 
 export function canonicalUrl(path: string) {
@@ -18,7 +18,7 @@ export function canonicalUrl(path: string) {
 }
 
 export function assetPath(path: string) {
-  return `${basePath}${path.startsWith("/") ? path : `/${path}`}`;
+  return path.startsWith("/") ? path : `/${path}`;
 }
 
 export function whatsappUrl(message: string) {
@@ -44,7 +44,7 @@ export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Babula Shots",
-  url: siteOrigin,
+  url: "https://babulashotsrd.com",
   telephone: phoneE164,
   email,
   logo: `${siteUrl}/images/cropped-babulashotslogo-1.webp`,

@@ -10,7 +10,7 @@ import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { withBasePath } from "@/lib/seo";
 
 function targetLanguagePath(pathname: string, targetLocale: "es" | "en") {
-  const currentPath = pathname.replace(/^\/inmobiliaria(?=\/|$)/, "") || "/";
+  const currentPath = pathname || "/";
   const pairs = [
     { es: "/", en: "/en/" },
     ...realEstateCities.map((city) => ({ es: cityPath(city), en: cityPath(city, "en") })),
@@ -35,7 +35,7 @@ function targetLanguagePath(pathname: string, targetLocale: "es" | "en") {
 export function ThemeLanguageControls() {
   const pathname = usePathname() || "/";
   const router = useRouter();
-  const currentPath = pathname.replace(/^\/inmobiliaria(?=\/|$)/, "") || "/";
+  const currentPath = pathname || "/";
   const isEnglish = currentPath === "/en" || currentPath === "/en/" || currentPath.startsWith("/en/");
   const targetLocale = isEnglish ? "es" : "en";
   const languagePath = useMemo(() => targetLanguagePath(pathname, targetLocale), [pathname, targetLocale]);

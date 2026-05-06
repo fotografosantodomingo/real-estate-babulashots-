@@ -1,7 +1,7 @@
 # Inmobiliaria Babula Shots Production Plan
 
-Recommended production URL: https://babulashotsrd.com/inmobiliaria/
-Fallback URL only if subfolder deployment is not possible: https://inmobiliaria.babulashotsrd.com
+Production URL: https://inmobiliaria.babulashotsrd.com
+Alternative URL only if the strategy changes later: https://babulashotsrd.com/inmobiliaria/
 Repository: git@github.com:fotografosantodomingo/real-estate-babulashots-.git
 Local path: /Users/subdomainsbabulashots/Documents/inmobiliaria
 
@@ -64,7 +64,7 @@ Stack:
 - Next.js static export
 - TypeScript
 - App Router
-- basePath configured for /inmobiliaria when deployed as a subfolder
+- root deployment on the subdomain with no Next.js basePath
 - Static route generation
 - Static sitemap generation
 - Static robots configuration
@@ -78,21 +78,21 @@ Stack:
 
 ## SEO Architecture Decision
 
-Preferred architecture:
-
-```text
-https://babulashotsrd.com/inmobiliaria/
-```
-
-Use the real estate site as a subfolder on the main Babula Shots domain whenever technically possible. This keeps brand authority, internal links, Search Console reporting, and crawl discovery under one primary domain.
-
-Avoid this unless there is a hard technical or business reason:
+Final architecture:
 
 ```text
 https://inmobiliaria.babulashotsrd.com/
 ```
 
-Google can crawl and rank both subdomains and subfolders, but subfolders are the stronger practical choice for this project because the real estate service is part of the same Babula Shots brand. A subdomain should only be used if the real estate operation must be technically isolated, managed as a separate property, or prepared for a future sale.
+Use the real estate site as a dedicated subdomain in front of the main Babula Shots domain. This keeps the brand connection clear while giving the real estate business its own clean URL, Cloudflare Pages project, sitemap, robots file, and Search Console property.
+
+Do not use this as the production canonical unless the strategy changes later:
+
+```text
+https://babulashotsrd.com/inmobiliaria/
+```
+
+Google can crawl and rank both subdomains and subfolders. Because the production requirement is now the subdomain, the site must compensate for the separated property by using strong internal links from the main Babula Shots domain, backlinks to the subdomain, real portfolio proof, precise local schema, and consistent Search Console monitoring.
 
 Dedicated-root-domain alternative:
 
@@ -100,7 +100,7 @@ Dedicated-root-domain alternative:
 https://fotografoinmobiliariord.com/
 ```
 
-Only consider a separate root domain if the long-term plan is to build and possibly sell a standalone real estate media brand. If the goal is maximum Babula Shots authority, use the subfolder.
+Only consider a separate root domain if the long-term plan is to build and possibly sell a standalone real estate media brand. For the current Babula Shots strategy, keep the real estate service on inmobiliaria.babulashotsrd.com and strengthen it with links from the main domain.
 
 Next.js deployment requirement:
 
@@ -108,7 +108,6 @@ Next.js deployment requirement:
 // next.config.mjs
 const nextConfig = {
   output: "export",
-  basePath: "/inmobiliaria",
   trailingSlash: true,
   images: {
     unoptimized: true
@@ -118,7 +117,7 @@ const nextConfig = {
 export default nextConfig;
 ```
 
-If Cloudflare Pages cannot directly serve this repo from the main domain subfolder, use a Cloudflare Worker or Pages routing rule to serve the static export under /inmobiliaria without changing canonical URLs.
+Cloudflare Pages should serve this repo directly from the custom domain inmobiliaria.babulashotsrd.com. If old /inmobiliaria paths exist from testing, redirect them to the equivalent root path on the subdomain.
 
 Recommended project structure:
 
@@ -169,14 +168,14 @@ public/
 
 Use clean Spanish routes for the main site and English routes under /en/. Keep slugs consistent, short, and search-focused. Each route must have one exact language pair in routeMap.ts so the language switcher never points to weak or unrelated pages.
 
-When deployed under the recommended subfolder, all canonical routes are prefixed with /inmobiliaria:
+When deployed on the subdomain, canonical routes are root-relative:
 
 ```text
-/inmobiliaria/fotografia-inmobiliaria-punta-cana/
-/inmobiliaria/en/real-estate-photography-punta-cana/
+/fotografia-inmobiliaria-punta-cana/
+/en/real-estate-photography-punta-cana/
 ```
 
-Inside data files, store slugs without the basePath and generate canonical URLs with a central helper so the site can be moved between subfolder and fallback subdomain without manually rewriting every route.
+Inside data files, store slugs without a domain prefix and generate canonical URLs with a central helper so the site can be moved later without manually rewriting every route.
 
 Homepage:
 - /
@@ -695,7 +694,7 @@ Build must pass:
 - TypeScript compile
 - No broken internal links
 - Sitemap includes every canonical route
-- Robots points to https://babulashotsrd.com/inmobiliaria/sitemap.xml when using the recommended subfolder architecture
+- Robots points to https://inmobiliaria.babulashotsrd.com/sitemap.xml
 - Lighthouse desktop target: 100/100/100/100
 - Lighthouse mobile target: as close to 100 as practical, with no critical SEO/accessibility failures
 
@@ -734,7 +733,7 @@ Ranking-readiness rules:
 - Do not rely on word count to rank service pages.
 - Do not ship generic WhatsApp messages.
 - Do not claim brokerage/developer logos without permission.
-- Do not use the subdomain as canonical unless the subfolder strategy is impossible.
+- Do not mix subfolder and subdomain canonicals. The production canonical is the subdomain.
 
 ## Redirects
 
@@ -753,10 +752,10 @@ Prepare redirects for legacy, alternate, and typo-prone URLs:
 /contenido-inmobiliario/ /contenido-para-agentes-inmobiliarios/ 301
 ```
 
-If moving from the originally planned subdomain to the recommended subfolder, add canonical redirects:
+If old subfolder URLs were used during testing, add canonical redirects:
 
 ```text
-https://inmobiliaria.babulashotsrd.com/* https://babulashotsrd.com/inmobiliaria/:splat 301
+https://babulashotsrd.com/inmobiliaria/* https://inmobiliaria.babulashotsrd.com/:splat 301
 ```
 
 Exact Cloudflare syntax must be confirmed during deployment.
@@ -811,7 +810,7 @@ Avoid:
 19. Commit initial production site.
 20. Push to GitHub remote.
 21. Connect Cloudflare Pages.
-22. Configure /inmobiliaria routing on babulashotsrd.com, with the subdomain only as a fallback or redirect source.
+22. Configure inmobiliaria.babulashotsrd.com as the production custom domain in Cloudflare Pages.
 23. Submit sitemap in Google Search Console.
 24. Track indexed pages and improve content based on impressions.
 
@@ -820,7 +819,7 @@ Avoid:
 Milestone 1: Foundation
 - Next.js setup
 - Static export
-- basePath /inmobiliaria
+- root subdomain deployment with no basePath
 - Header/footer
 - Theme/language controls
 - Core CSS
@@ -864,29 +863,29 @@ The goal is to build the strongest realistic chance of ranking #1 for the planne
 
 Status target before launch:
 - 100% static export.
-- All canonical URLs under https://babulashotsrd.com/inmobiliaria/.
+- All canonical URLs under https://inmobiliaria.babulashotsrd.com/.
 - Sitemap includes every Spanish and English page.
-- Robots points to the /inmobiliaria sitemap.
+- Robots points to https://inmobiliaria.babulashotsrd.com/sitemap.xml.
 - Every route has a title, meta description, canonical URL, hreflang pair, schema, FAQ where useful, and dynamic WhatsApp CTA.
 - No generic city pages.
 - No city page launches without relevant real estate visuals or a truthful gallery/portfolio fallback.
 
 Critical checks:
-- Confirm /inmobiliaria/ is technically possible on the main domain before using the subdomain as canonical.
-- If the subdomain must stay live temporarily, redirect it to the subfolder.
+- Confirm the Cloudflare Pages custom domain is attached to inmobiliaria.babulashotsrd.com.
+- Add strong links from babulashotsrd.com to the subdomain because authority will not be consolidated through a subfolder.
 - Submit only the final canonical sitemap to Google Search Console.
 
 ### Phase 2: Money Keyword Pages
 
 Highest-priority ranking pages:
-- /inmobiliaria/fotografia-inmobiliaria-republica-dominicana/
-- /inmobiliaria/fotografia-inmobiliaria-santo-domingo/
-- /inmobiliaria/fotografia-inmobiliaria-punta-cana/
-- /inmobiliaria/foto-video-inmobiliario/
-- /inmobiliaria/video-inmobiliario-republica-dominicana/
-- /inmobiliaria/fotografia-drone-inmobiliaria/
-- /inmobiliaria/fotografia-para-airbnb-villas/
-- /inmobiliaria/precios-fotografia-inmobiliaria-republica-dominicana/
+- /fotografia-inmobiliaria-republica-dominicana/
+- /fotografia-inmobiliaria-santo-domingo/
+- /fotografia-inmobiliaria-punta-cana/
+- /foto-video-inmobiliario/
+- /video-inmobiliario-republica-dominicana/
+- /fotografia-drone-inmobiliaria/
+- /fotografia-para-airbnb-villas/
+- /precios-fotografia-inmobiliaria-republica-dominicana/
 
 Each money page must have:
 - One exact-intent H1.
