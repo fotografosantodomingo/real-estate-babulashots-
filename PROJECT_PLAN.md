@@ -836,6 +836,7 @@ Cloudflare Pages settings:
 Custom domain still required:
 - Add custom domain in Cloudflare Pages: inmobiliaria.babulashotsrd.com
 - The DNS for babulashotsrd.com is currently managed by Hostinger nameservers, not Cloudflare DNS.
+- The current live subdomain is still served by Hostinger/WordPress, so DNS must be changed before the Cloudflare Pages build becomes live on the production URL.
 - Hostinger DNS must add a CNAME record:
 
 ```text
