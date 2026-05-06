@@ -4,6 +4,8 @@ Production URL: https://inmobiliaria.babulashotsrd.com
 Alternative URL only if the strategy changes later: https://babulashotsrd.com/inmobiliaria/
 Repository: git@github.com:fotografosantodomingo/real-estate-babulashots-.git
 Local path: /Users/subdomainsbabulashots/Documents/inmobiliaria
+Cloudflare Pages project: inmobilliaria-babulashots
+Current Pages preview: https://9ed246e5.inmobilliaria-babulashots.pages.dev
 
 ## Goal
 
@@ -813,6 +815,42 @@ Avoid:
 22. Configure inmobiliaria.babulashotsrd.com as the production custom domain in Cloudflare Pages.
 23. Submit sitemap in Google Search Console.
 24. Track indexed pages and improve content based on impressions.
+
+## Cloudflare Deployment Status
+
+Current status:
+- GitHub repository pushed successfully over HTTPS.
+- Cloudflare Pages project exists: inmobilliaria-babulashots.
+- Latest production deployment uploaded from the local static export.
+- Deployment URL: https://9ed246e5.inmobilliaria-babulashots.pages.dev
+- Build output directory saved in wrangler.toml as out.
+
+Cloudflare Pages settings:
+- Project name: inmobilliaria-babulashots
+- Production branch: main
+- Build command: npm run build
+- Output directory: out
+- Framework preset: Next.js static export or None/custom
+- Node version: current Cloudflare default is acceptable if npm run build passes; set Node 20+ if Cloudflare asks.
+
+Custom domain still required:
+- Add custom domain in Cloudflare Pages: inmobiliaria.babulashotsrd.com
+- The DNS for babulashotsrd.com is currently managed by Hostinger nameservers, not Cloudflare DNS.
+- Hostinger DNS must add a CNAME record:
+
+```text
+Type: CNAME
+Name: inmobiliaria
+Target: inmobilliaria-babulashots.pages.dev
+TTL: 300 or automatic
+Proxy: DNS only if managed outside Cloudflare
+```
+
+After DNS is added:
+- Wait for propagation.
+- Verify https://inmobiliaria.babulashotsrd.com loads the site.
+- Verify https://inmobiliaria.babulashotsrd.com/sitemap.xml.
+- Submit https://inmobiliaria.babulashotsrd.com/sitemap.xml in Google Search Console.
 
 ## Initial Build Milestones
 
