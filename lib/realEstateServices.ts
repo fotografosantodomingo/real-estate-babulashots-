@@ -174,7 +174,7 @@ export const realEstateServices: RealEstateService[] = [
     enDeliverables: ["Living and dining", "Kitchen", "Bedrooms", "Amenities", "Facade and lobby"],
     proof: "Pensado para torres, apartamentos nuevos, reventas y alquileres de larga o corta estancia.",
     enProof: "Designed for towers, new apartments, resales and long or short-term rentals.",
-    whatsappMessage: quote("fotografia para apartamentos en venta")
+    whatsappMessage: routeMessage("fotografia-para-apartamentos-en-venta")
   },
   {
     slug: "fotografia-para-casas-en-venta",

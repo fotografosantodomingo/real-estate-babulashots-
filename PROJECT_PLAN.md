@@ -4,8 +4,8 @@ Production URL: https://inmobiliaria.babulashotsrd.com
 Alternative URL only if the strategy changes later: https://babulashotsrd.com/inmobiliaria/
 Repository: git@github.com:fotografosantodomingo/real-estate-babulashots-.git
 Local path: /Users/subdomainsbabulashots/Documents/inmobiliaria
-Cloudflare Pages project: inmobilliaria-babulashots
-Current Pages preview: https://f4d2dd58.inmobilliaria-babulashots.pages.dev
+Cloudflare Pages project: inmobiliaria-babulashots
+Current Pages preview: https://inmobiliaria-babulashots.pages.dev
 
 ## Goal
 
@@ -820,9 +820,9 @@ Avoid:
 
 Current status:
 - GitHub repository pushed successfully over HTTPS.
-- Cloudflare Pages project exists: inmobilliaria-babulashots.
+- Cloudflare Pages project exists: inmobiliaria-babulashots.
 - Latest production deployment uploaded from the local static export.
-- Deployment URL: https://f4d2dd58.inmobilliaria-babulashots.pages.dev
+- Deployment URL: https://inmobiliaria-babulashots.pages.dev
 - Build output directory saved in wrangler.toml as out.
 - Content audit passed for all 96 canonical pages: one H1, title, meta description, canonical, visible content, and JSON-LD.
 - Schema audit passed for all 96 canonical pages: valid JSON-LD parsing, BreadcrumbList, and core page/service/article schema.
@@ -830,7 +830,7 @@ Current status:
 - A full sitemap Lighthouse sweep passed 95/96 routes on first run and the only 99-performance page passed 100/100/100/100 on rerun, indicating timing variance rather than a code issue.
 
 Cloudflare Pages settings:
-- Project name: inmobilliaria-babulashots
+- Project name: inmobiliaria-babulashots
 - Production branch: main
 - Build command: npm run build
 - Output directory: out
@@ -846,7 +846,7 @@ Custom domain still required:
 ```text
 Type: CNAME
 Name: inmobiliaria
-Target: inmobilliaria-babulashots.pages.dev
+Target: inmobiliaria-babulashots.pages.dev
 TTL: 300 or automatic
 Proxy: DNS only if managed outside Cloudflare
 ```

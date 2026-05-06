@@ -35,6 +35,12 @@ export const routeMap: RouteMapItem[] = [
     whatsappMessage: "Hola, necesito fotos profesionales para mi Airbnb o villa en Republica Dominicana. Cual es el precio por propiedad?"
   },
   {
+    slug: "fotografia-para-apartamentos-en-venta",
+    enSlug: "apartment-listing-photography",
+    type: "service",
+    whatsappMessage: "Hola, vengo de la pagina de apartamentos. Necesito cotizar fotos profesionales para un apartamento en venta o alquiler. Esta en Santo Domingo y quisiera saber precio, disponibilidad y si recomiendan agregar drone o video."
+  },
+  {
     slug: "fotografia-drone-inmobiliaria",
     enSlug: "drone-real-estate-photography",
     type: "service",

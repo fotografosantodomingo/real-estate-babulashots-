@@ -9,7 +9,7 @@ import { ServicePackages } from "@/components/ServicePackages";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
 import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { realEstatePackages } from "@/lib/realEstatePackages";
-import { servicePath, type RealEstateService } from "@/lib/realEstateServices";
+import { realEstateServices, servicePath, type RealEstateService } from "@/lib/realEstateServices";
 import { assetPath, breadcrumbSchema, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
 
 export function RealEstateServicePage({ service, locale = "es" }: { service: RealEstateService; locale?: "es" | "en" }) {
@@ -104,10 +104,41 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
       </section>
 
       <PropertyGallery locale={locale} />
+
+      <section className="section alt-section">
+        <div className="wrap split">
+          <p className="section-tag">{isEnglish ? "Process" : "Proceso"}</p>
+          <div>
+            <h2>{isEnglish ? "Fast workflow for property listings" : "Flujo rapido para publicar propiedades"}</h2>
+            <ul className="service-list">
+              {(isEnglish
+                ? ["Confirm city and property type", "Plan photos, video or drone", "Capture interiors, exteriors and amenities", "Edit for listing platforms", "Deliver files ready for portals and WhatsApp"]
+                : ["Confirmar ciudad y tipo de propiedad", "Planificar fotos, video o drone", "Capturar interiores, exteriores y amenidades", "Editar para portales inmobiliarios", "Entregar archivos listos para portales y WhatsApp"]
+              ).map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <ServicePackages locale={locale} />
       <BeforeAfterSlider locale={locale} />
       <Integrations locale={locale} />
       <FaqBlock items={faq} />
+
+      <section className="section">
+        <div className="wrap">
+          <div className="section-heading">
+            <p className="section-tag">{isEnglish ? "Related services" : "Servicios relacionados"}</p>
+            <h2>{isEnglish ? "Useful add-ons for this listing" : "Adicionales utiles para este listado"}</h2>
+          </div>
+          <div className="related-links">
+            {realEstateServices
+              .filter((item) => item.slug !== service.slug)
+              .filter((item) => ["fotografia-drone-inmobiliaria", "foto-video-inmobiliario", "reels-inmobiliarios", "precios-fotografia-inmobiliaria-republica-dominicana"].includes(item.slug))
+              .map((item) => <Link href={servicePath(item, locale)} key={item.slug}>{isEnglish ? item.enH1 : item.h1}</Link>)}
+          </div>
+        </div>
+      </section>
 
       <section className="section">
         <div className="wrap">
