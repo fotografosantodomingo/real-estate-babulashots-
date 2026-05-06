@@ -1,11 +1,35 @@
 import Image from "next/image";
-import { assetPath } from "@/lib/seo";
+import { assetPath, portfolioUrl } from "@/lib/seo";
 
 const galleryItems = [
-  { label: "Interior", alt: "Fotografia inmobiliaria de interior moderno" },
-  { label: "Villa", alt: "Fotografia para villa de lujo en Republica Dominicana" },
-  { label: "Drone", alt: "Foto drone inmobiliaria para propiedad turistica" },
-  { label: "Lobby", alt: "Fotografia de lobby comercial para proyecto inmobiliario" }
+  {
+    label: "Interior",
+    src: "/images/legacy-real-estate/santo-domingo-property-interior.webp",
+    width: 1400,
+    height: 826,
+    alt: "Fotografia inmobiliaria de interior en Santo Domingo"
+  },
+  {
+    label: "Villa",
+    src: "/images/legacy-real-estate/real-estate-photography-rd.webp",
+    width: 1000,
+    height: 621,
+    alt: "Fotografia profesional inmobiliaria en Republica Dominicana"
+  },
+  {
+    label: "Drone",
+    src: "/images/legacy-real-estate/drone-real-estate-rd.webp",
+    width: 1400,
+    height: 935,
+    alt: "Foto drone inmobiliaria para propiedad en Republica Dominicana"
+  },
+  {
+    label: "Airbnb",
+    src: "/images/legacy-real-estate/pictime-property-gallery-cover.webp",
+    width: 1000,
+    height: 590,
+    alt: "Galeria Babula Shots con propiedades y contenido Airbnb"
+  }
 ];
 
 export function PropertyGallery({ locale = "es" }: { locale?: "es" | "en" }) {
@@ -15,11 +39,12 @@ export function PropertyGallery({ locale = "es" }: { locale?: "es" | "en" }) {
         <div className="section-heading">
           <p className="section-tag">Portfolio</p>
           <h2>{locale === "en" ? "Property media examples" : "Ejemplos visuales para propiedades"}</h2>
+          <a className="inline-link" href={portfolioUrl}>{locale === "en" ? "View full Pic-Time gallery" : "Ver galeria completa en Pic-Time"}</a>
         </div>
         <div className="property-gallery">
           {galleryItems.map((item) => (
             <figure key={item.label}>
-              <Image src={assetPath("/images/real-estate-media-dominican-republic.webp")} alt={item.alt} width={1672} height={941} />
+              <Image src={assetPath(item.src)} alt={item.alt} width={item.width} height={item.height} />
               <figcaption>{item.label}</figcaption>
             </figure>
           ))}

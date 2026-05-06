@@ -5,6 +5,7 @@ export const phoneDisplay = "809 720 95 47";
 export const phoneE164 = "+18097209547";
 export const email = "info@babulashotsrd.com";
 export const whatsappNumber = "18097209547";
+export const portfolioUrl = "https://babulashots.pic-time.com/client";
 
 export function withBasePath(path: string) {
   if (path === "/") return `${basePath}/`;

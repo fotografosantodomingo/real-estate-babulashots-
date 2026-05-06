@@ -23,7 +23,7 @@ export type RealEstateCity = {
   whatsappMessage: string;
 };
 
-const image = "/images/real-estate-media-dominican-republic.webp";
+const defaultImage = "/images/real-estate-media-dominican-republic.webp";
 
 export const realEstateCities: RealEstateCity[] = [
   {
@@ -45,7 +45,7 @@ export const realEstateCities: RealEstateCity[] = [
     propertyTypes: ["Apartamentos", "Torres residenciales", "Locales comerciales", "Airbnb", "Proyectos en preventa"],
     areas: ["Piantini", "Naco", "Bella Vista", "Zona Colonial", "Anacaona"],
     nearby: ["Punta Cana", "La Romana", "Santiago"],
-    image,
+    image: "/images/legacy-real-estate/santo-domingo-property-interior.webp",
     whatsappMessage: "Hola, necesito cotizar foto o video inmobiliario para una propiedad en Santo Domingo. Podemos coordinar disponibilidad?"
   },
   {
@@ -67,7 +67,7 @@ export const realEstateCities: RealEstateCity[] = [
     propertyTypes: ["Villas", "Condos", "Resorts", "Airbnb", "Propiedades de inversion"],
     areas: ["Bavaro", "Cap Cana", "Cocotal", "Los Corales", "Macao"],
     nearby: ["Bavaro", "Cap Cana", "Bayahibe"],
-    image,
+    image: "/images/legacy-real-estate/real-estate-photography-rd.webp",
     whatsappMessage: routeMessage("fotografia-inmobiliaria-punta-cana")
   },
   {
@@ -89,7 +89,7 @@ export const realEstateCities: RealEstateCity[] = [
     propertyTypes: ["Villas de lujo", "Apartamentos", "Casas vacacionales", "Airbnb", "Propiedades premium"],
     areas: ["Casa de Campo", "Altos de Chavon", "Minitas", "Bayahibe", "Dominicus"],
     nearby: ["Punta Cana", "Bayahibe", "Santo Domingo"],
-    image,
+    image: "/images/legacy-real-estate/real-estate-service-rd.webp",
     whatsappMessage: "Hola, necesito fotos profesionales para mi propiedad en La Romana o Casa de Campo. Cual es el precio y disponibilidad?"
   },
   {
@@ -111,7 +111,7 @@ export const realEstateCities: RealEstateCity[] = [
     propertyTypes: ["Apartamentos", "Torres", "Locales", "Proyectos", "Casas"],
     areas: ["Centro de Santiago", "La Trinitaria", "Los Jardines", "Cerros de Gurabo", "Villa Olga"],
     nearby: ["Puerto Plata", "Jarabacoa", "La Vega"],
-    image,
+    image: defaultImage,
     whatsappMessage: "Hola, necesito cotizar fotos inmobiliarias para una propiedad en Santiago. Me pueden enviar paquetes?"
   }
 ];
