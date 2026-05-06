@@ -8,8 +8,9 @@ import { FaqBlock } from "@/components/FaqBlock";
 import { ServicePackages } from "@/components/ServicePackages";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
 import { realEstateCities, cityPath } from "@/lib/realEstateCities";
+import { realEstatePackages } from "@/lib/realEstatePackages";
 import { servicePath, type RealEstateService } from "@/lib/realEstateServices";
-import { assetPath, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
+import { assetPath, breadcrumbSchema, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
 
 export function RealEstateServicePage({ service, locale = "es" }: { service: RealEstateService; locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
@@ -31,13 +32,32 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
   const schema = [
     {
       "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: isEnglish ? service.enH1 : service.h1,
+      url: canonicalUrl(path),
+      inLanguage: isEnglish ? "en" : "es-DO",
+      about: { "@type": "Service", name: isEnglish ? service.enH1 : service.h1 }
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Service",
       name: isEnglish ? service.enH1 : service.h1,
       serviceType: "Real estate media",
       url: canonicalUrl(path),
       provider: { "@type": "ProfessionalService", name: "Babula Shots Inmobiliaria", telephone: phoneE164, url: siteUrl },
       areaServed: { "@type": "Country", name: "Dominican Republic" },
-      offers: { "@type": "Offer", priceCurrency: "USD", availability: "https://schema.org/InStock" }
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: isEnglish ? "Real estate media starting prices" : "Precios base de contenido inmobiliario",
+        itemListElement: realEstatePackages.filter((item) => item.priceValueDop).map((item) => ({
+          "@type": "Offer",
+          name: isEnglish ? item.enName : item.name,
+          priceCurrency: "DOP",
+          price: item.priceValueDop,
+          availability: "https://schema.org/InStock",
+          itemOffered: { "@type": "Service", name: isEnglish ? item.enName : item.name }
+        }))
+      }
     },
     {
       "@context": "https://schema.org",
@@ -47,7 +67,11 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
         name: item.question,
         acceptedAnswer: { "@type": "Answer", text: item.answer }
       }))
-    }
+    },
+    breadcrumbSchema([
+      { name: "Babula Shots Inmobiliaria", path: isEnglish ? "/en/" : "/" },
+      { name: isEnglish ? service.enH1 : service.h1, path }
+    ])
   ];
 
   return (

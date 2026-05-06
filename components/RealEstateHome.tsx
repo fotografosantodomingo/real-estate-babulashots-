@@ -11,7 +11,7 @@ import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { realEstateIndustries, industryPath } from "@/lib/realEstateIndustries";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { routeMessage } from "@/lib/routeMap";
-import { assetPath, canonicalUrl, organizationSchema, phoneE164, siteUrl } from "@/lib/seo";
+import { assetPath, breadcrumbSchema, canonicalUrl, organizationSchema, phoneE164, siteUrl } from "@/lib/seo";
 
 export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
@@ -43,7 +43,8 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
       name: isEnglish ? "Real estate photography in Dominican Republic" : "Fotografia inmobiliaria en Republica Dominicana",
       url: canonicalUrl(homePath),
       inLanguage: isEnglish ? "en" : "es-DO"
-    }
+    },
+    breadcrumbSchema([{ name: "Babula Shots Inmobiliaria", path: homePath }])
   ];
 
   return (

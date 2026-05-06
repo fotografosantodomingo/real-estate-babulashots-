@@ -331,7 +331,8 @@ p {
 .card p,
 .split p,
 .article p,
-.conversion-panel p {
+.conversion-panel p,
+.source-note {
   color: var(--muted);
 }
 
@@ -452,8 +453,20 @@ p {
   min-height: 280px;
 }
 
+.price-line {
+  margin: 0;
+  color: var(--dark);
+  font-size: 1.05rem;
+  font-weight: 850;
+}
+
 .package-list {
   margin-top: auto;
+}
+
+.source-note {
+  margin: 1rem 0 0;
+  font-size: .92rem;
 }
 
 .related-links {

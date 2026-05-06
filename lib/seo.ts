@@ -6,6 +6,7 @@ export const phoneE164 = "+18097209547";
 export const email = "info@babulashotsrd.com";
 export const whatsappNumber = "18097209547";
 export const portfolioUrl = "https://babulashots.pic-time.com/client";
+export const pricingSourceUrl = "https://www.fotografosantodomingo.com/es/prices";
 
 export function withBasePath(path: string) {
   if (path === "/") return "/";
@@ -50,3 +51,16 @@ export const organizationSchema = {
   logo: `${siteUrl}/images/cropped-babulashotslogo-1.webp`,
   sameAs: ["https://www.instagram.com/babulashotsrd/"]
 };
+
+export function breadcrumbSchema(items: Array<{ name: string; path: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: canonicalUrl(item.path)
+    }))
+  };
+}

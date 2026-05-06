@@ -6,7 +6,7 @@ import { FaqBlock } from "@/components/FaqBlock";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
-import { assetPath, cityAreaServed, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
+import { assetPath, breadcrumbSchema, cityAreaServed, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
 import { cityPath, realEstateCities, type RealEstateCity } from "@/lib/realEstateCities";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 
@@ -25,6 +25,15 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
     }
   ];
   const schema = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: title,
+      url: canonicalUrl(path),
+      inLanguage: isEnglish ? "en" : "es-DO",
+      about: { "@type": "Service", name: title },
+      primaryImageOfPage: `${siteUrl}${city.image}`
+    },
     {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
@@ -51,7 +60,11 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
         name: item.question,
         acceptedAnswer: { "@type": "Answer", text: item.answer }
       }))
-    }
+    },
+    breadcrumbSchema([
+      { name: "Babula Shots Inmobiliaria", path: isEnglish ? "/en/" : "/" },
+      { name: title, path }
+    ])
   ];
 
   return (
