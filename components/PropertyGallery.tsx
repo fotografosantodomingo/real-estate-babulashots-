@@ -44,7 +44,7 @@ export function PropertyGallery({ locale = "es" }: { locale?: "es" | "en" }) {
         <div className="property-gallery">
           {galleryItems.map((item) => (
             <figure key={item.label}>
-              <Image src={assetPath(item.src)} alt={item.alt} width={item.width} height={item.height} />
+              <Image src={assetPath(item.src)} alt={item.alt} width={item.width} height={item.height} sizes="(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 25vw" />
               <figcaption>{item.label}</figcaption>
             </figure>
           ))}
