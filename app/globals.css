@@ -22,7 +22,14 @@
   --line: #2b3933;
   --panel: #17211d;
   --panel-2: #1e2b26;
+  --accent: #66d4bd;
+  --accent-2: #e2b66d;
   color-scheme: dark;
+}
+
+:root[data-theme="dark"] .button-outline {
+  color: var(--text);
+  border-color: var(--text);
 }
 
 * {
@@ -140,6 +147,15 @@ p {
   gap: .45rem;
 }
 
+.control-group {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .2rem;
+  border: 1px solid rgba(255, 255, 255, .24);
+  border-radius: 999px;
+}
+
 .control-button {
   min-width: 48px;
   min-height: 48px;
@@ -155,6 +171,18 @@ p {
   font-size: .82rem;
   font-weight: 760;
   cursor: pointer;
+}
+
+.icon-button {
+  min-width: 42px;
+  min-height: 42px;
+  padding: .45rem;
+}
+
+.control-button[aria-pressed="true"] {
+  background: #fff;
+  color: var(--dark);
+  border-color: #fff;
 }
 
 .hero {
