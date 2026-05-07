@@ -422,41 +422,6 @@ p {
   font-weight: 800;
 }
 
-.before-after {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 280px;
-  margin: 1.2rem 0;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: linear-gradient(135deg, #7b7469, #d8cbbb 48%, #eff4ee 49%, #ffffff);
-}
-
-.before-side,
-.after-side {
-  display: flex;
-  align-items: flex-end;
-  padding: 1rem;
-  color: #fff;
-  font-weight: 820;
-}
-
-.after-side {
-  color: var(--dark);
-  justify-content: flex-end;
-}
-
-.slider-line {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 3px;
-  background: #fff;
-  box-shadow: 0 0 0 1px rgba(0,0,0,.15);
-}
-
 .chip-list,
 .service-list,
 .package-list {

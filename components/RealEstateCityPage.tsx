@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { ConversionPanel } from "@/components/ConversionPanel";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Integrations } from "@/components/Integrations";
@@ -104,7 +103,6 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
           </div>
         </section>
       ) : null}
-      <BeforeAfterSlider locale={locale} />
       <Integrations locale={locale} />
       {faq.length ? <FaqBlock items={faq} /> : null}
 

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { BeforeAfterSlider } from "@/components/BeforeAfterSlider";
 import { ConversionPanel } from "@/components/ConversionPanel";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
@@ -152,7 +151,6 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
       </section>
 
       <ServicePackages locale={locale} />
-      <BeforeAfterSlider locale={locale} />
       <Integrations locale={locale} />
       <FaqBlock items={faq} />
 
