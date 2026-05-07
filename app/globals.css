@@ -468,6 +468,41 @@ p {
   font-weight: 850;
 }
 
+.pricing-table {
+  display: grid;
+  gap: .55rem;
+  margin-top: 1.2rem;
+}
+
+.pricing-row {
+  display: grid;
+  grid-template-columns: minmax(130px, .7fr) minmax(180px, 1.4fr) minmax(100px, .45fr);
+  gap: .75rem;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: .85rem;
+}
+
+.pricing-head {
+  background: var(--dark);
+  color: #fff;
+  font-weight: 850;
+}
+
+.pricing-row span:first-child,
+.pricing-row span:last-child {
+  font-weight: 820;
+}
+
+.pricing-row span:nth-child(2) {
+  color: var(--muted);
+}
+
+.pricing-head span:nth-child(2) {
+  color: rgba(255,255,255,.82);
+}
+
 .package-list {
   margin-top: auto;
 }
@@ -596,6 +631,10 @@ summary {
   .authority-grid,
   .small-grid,
   .property-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-row {
     grid-template-columns: 1fr;
   }
 

@@ -23,6 +23,8 @@ export type RealEstateCity = {
   enTargetAudience?: string;
   marketNotes?: string[];
   enMarketNotes?: string[];
+  localSeoSections?: Array<{ heading: string; body: string; items: string[] }>;
+  enLocalSeoSections?: Array<{ heading: string; body: string; items: string[] }>;
   faq?: { question: string; answer: string }[];
   enFaq?: { question: string; answer: string }[];
   image: string;
@@ -550,12 +552,70 @@ const cityDetails: Record<string, Pick<RealEstateCity, "targetAudience" | "enTar
   }
 };
 
+function citySeoSections(city: RealEstateCity, isEnglish = false) {
+  const areas = city.areas.join(", ");
+  const propertyTypes = city.propertyTypes.join(", ");
+  const notes = isEnglish ? city.enMarketNotes ?? [] : city.marketNotes ?? [];
+  const audience = isEnglish ? city.enTargetAudience : city.targetAudience;
+  const localAngle = isEnglish ? city.enLocalAngle : city.localAngle;
+
+  if (isEnglish) {
+    return [
+      {
+        heading: `Search intent in ${city.city}`,
+        body: `${city.city} clients are not only searching for a photographer; they need media that helps a listing earn attention, explain location and create trust before a buyer, renter or investor asks for a showing. The page is built around ${propertyTypes.toLowerCase()} because those are the property types that most affect media decisions in ${city.province}. ${localAngle}`,
+        items: [`Primary areas: ${areas}`, `Typical clients: ${audience}`, `Best first asset: a strong cover image plus a complete gallery`, "Recommended add-ons: drone, short video and vertical clips when location or lifestyle affects price"]
+      },
+      {
+        heading: `Shot plan for ${city.city}`,
+        body: `A strong real estate session in ${city.city} should be planned before arrival. We prioritize the rooms, amenities and exterior angles that explain value quickly, then export files for portals, WhatsApp and social media. The goal is to avoid a random gallery and create a sales sequence that moves from first impression to proof.`,
+        items: ["Hero exterior or lifestyle image", "Interior sequence that explains layout", "Amenity and building/community context", "Detail images for finishes, views and rental confidence"]
+      },
+      {
+        heading: `How the media is used`,
+        body: `The final delivery should support more than one post. Agents and owners usually need a portal gallery, a WhatsApp set, vertical crops for stories, website images, thumbnails and sometimes brochure files. For ${city.city}, this matters because buyers compare fast and often decide whether to request more information from the first five images.`,
+        items: ["Point2Homes, TerrenosRD and MLS-style listings", "Airbnb, Booking and direct rental pages when relevant", "Instagram reels, stories and paid ads", "Developer presentations and property websites"]
+      },
+      {
+        heading: `Local ranking signals`,
+        body: `Google needs clear local context, and clients need it too. This page names specific zones such as ${areas}, connects them with the right property types and keeps the content tied to real services instead of generic city text. That helps the page read like a local service guide, not a duplicated template.`,
+        items: notes.length ? notes : [`${city.city} requires local property context`, "Photos should match the buyer's decision process", "Internal links connect this page to service and nearby city pages"]
+      }
+    ];
+  }
+
+  return [
+    {
+      heading: `Intencion de busqueda en ${city.city}`,
+      body: `Quien busca fotografia inmobiliaria en ${city.city} normalmente no quiere solo un fotografo. Necesita contenido que ayude a que una propiedad consiga clics, explique ubicacion y genere confianza antes de una visita o llamada. Esta pagina se enfoca en ${propertyTypes.toLowerCase()} porque esos son los tipos de propiedad donde la estrategia visual cambia en ${city.province}. ${localAngle}`,
+      items: [`Zonas principales: ${areas}`, `Clientes frecuentes: ${audience}`, "Primera pieza clave: portada fuerte y galeria completa", "Adicionales recomendados: drone, video corto y clips verticales cuando ubicacion o lifestyle afectan el precio"]
+    },
+    {
+      heading: `Plan de tomas para ${city.city}`,
+      body: `Una buena sesion inmobiliaria en ${city.city} se planifica antes de llegar. Priorizamos los espacios, amenidades y angulos exteriores que explican valor rapido, y luego exportamos archivos listos para portales, WhatsApp y redes. La meta es evitar una galeria aleatoria y construir una secuencia comercial: impacto, distribucion, prueba y accion.`,
+      items: ["Foto hero exterior o de lifestyle", "Recorrido interior que explique distribucion", "Amenidades y contexto del edificio o comunidad", "Detalles de terminacion, vista y confianza para renta o venta"]
+    },
+    {
+      heading: `Como se usa el contenido`,
+      body: `La entrega final debe servir para mas de una publicacion. Agentes y propietarios suelen necesitar galeria para portales, set ligero para WhatsApp, recortes verticales, imagenes web, miniaturas y a veces archivos para brochure. En ${city.city}, esto importa porque el comprador compara rapido y decide si pregunta por la propiedad desde las primeras cinco imagenes.`,
+      items: ["Point2Homes, TerrenosRD y listados estilo MLS", "Airbnb, Booking y paginas de renta directa cuando aplica", "Reels, historias de Instagram y anuncios", "Presentaciones de desarrolladores y websites de proyecto"]
+    },
+    {
+      heading: `Senales locales para SEO`,
+      body: `Google necesita contexto local claro, y el cliente tambien. Esta pagina menciona zonas especificas como ${areas}, las conecta con los tipos de propiedad correctos y mantiene el contenido atado a servicios reales, no a texto generico de ciudad. Eso ayuda a que la pagina funcione como guia local de servicio y no como plantilla duplicada.`,
+      items: notes.length ? notes : [`${city.city} necesita contexto inmobiliario local`, "Las fotos deben seguir el proceso de decision del comprador", "Los enlaces internos conectan esta ciudad con servicios y zonas cercanas"]
+    }
+  ];
+}
+
 for (const city of realEstateCities) {
   const details = cityDetails[city.slug];
   if (!details) {
     throw new Error(`Missing unique city details for ${city.slug}`);
   }
   Object.assign(city, details);
+  city.localSeoSections = citySeoSections(city);
+  city.enLocalSeoSections = citySeoSections(city, true);
 }
 
 export function cityPath(city: RealEstateCity, locale: "es" | "en" = "es") {
