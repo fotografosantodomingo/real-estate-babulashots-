@@ -5,7 +5,7 @@ import { FaqBlock } from "@/components/FaqBlock";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
-import { assetPath, bookingUrl, breadcrumbSchema, cityAreaServed, canonicalUrl, mainBrandUrl, phoneE164, pricingSourceUrl, santoDomingoHubUrl, siteUrl, withBasePath } from "@/lib/seo";
+import { assetPath, bookingUrl, breadcrumbSchema, cityAreaServed, canonicalUrl, mainBrandUrl, phoneE164, pricingSourceUrl, santoDomingoHubUrl, siteUrl } from "@/lib/seo";
 import { cityPath, realEstateCities, type RealEstateCity } from "@/lib/realEstateCities";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { realEstatePackages } from "@/lib/realEstatePackages";
@@ -33,7 +33,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
         : `Usa el boton de reserva o el CTA de WhatsApp y envia ciudad, zona, tipo de propiedad, cantidad de habitaciones y si necesitas foto, video, drone o reels.`
     },
     {
-      question: isEnglish ? `Is transportation included for ${city.city}?` : `¿Incluye transporte para ${city.city}?`,
+      question: isEnglish ? `Are transfers included for ${city.city}?` : `¿Incluye traslados para ${city.city}?`,
       answer: isEnglish
         ? `Transportation depends on the exact area, schedule and production size. We confirm travel before booking so the quote is clear before the session.`
         : `El transporte depende de la zona exacta, horario y tamano de produccion. Confirmamos traslado antes de reservar para que la cotizacion quede clara antes de la sesion.`
@@ -174,7 +174,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
           <h1>{title}</h1>
           <p>{isEnglish ? city.enIntro : city.intro}</p>
           <div className="hero-actions">
-            <a className="button button-light" href="#contacto">{isEnglish ? "Book / request quote" : "Reservar / cotizar"}</a>
+            <a className="button button-light" href="#contacto">{isEnglish ? `Book Session in ${city.city}` : `Reservar Sesión en ${city.city}`}</a>
             <a className="button button-ghost" href={bookingUrl}>{isEnglish ? "Book session" : "Reservar sesión"}</a>
           </div>
         </div>
@@ -198,7 +198,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
         </div>
       </section>
 
-      <PropertyGallery locale={locale} />
+      <PropertyGallery locale={locale} city={city.city} areas={city.areas} />
       {marketNotes.length ? (
         <section className="section alt-section">
           <div className="wrap split">
@@ -268,7 +268,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
             <p>
               {isEnglish
                 ? `These are starting references for planning a property media budget in ${city.city}. Final pricing depends on area, property size, rooms, travel, urgency and whether the job includes photo, video, drone or reels.`
-                : `Estos son precios base de referencia para planificar contenido inmobiliario en ${city.city}. Precios estandarizados para RD con garantia de Babula Shots. La cotizacion final depende de zona, tamano de la propiedad, cantidad de espacios, traslado, urgencia y si incluye foto, video, drone o reels.`}
+                : `Estos son precios base de referencia para planificar contenido inmobiliario en ${city.city}. Precios estandarizados para RD con la garantía de calidad de Babula Shots. La cotizacion final depende de zona, tamano de la propiedad, cantidad de espacios, traslado, urgencia y si incluye foto, video, drone o reels.`}
             </p>
             <div className="pricing-table" role="table" aria-label={isEnglish ? `Real estate media prices in ${city.city}` : `Precios de contenido inmobiliario en ${city.city}`}>
               <div className="pricing-row pricing-head" role="row">
@@ -280,7 +280,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
                 <div className="pricing-row" role="row" key={item.name}>
                   <span role="cell">{isEnglish ? item.enName : item.name}</span>
                   <span role="cell">{isEnglish ? item.enBestFor : item.bestFor}</span>
-                  <span role="cell">{`RD$${item.priceValueDop?.toLocaleString("en-US")}`}</span>
+                  <span role="cell">{isEnglish ? item.enPrice : item.price}</span>
                 </div>
               ))}
             </div>
