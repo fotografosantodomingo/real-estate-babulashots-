@@ -1,4 +1,12 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { languagePathsFor } from "@/lib/languageRoutes";
+
 export function ThemeLanguageControls() {
+  const pathname = usePathname();
+  const languagePaths = languagePathsFor(pathname);
+
   return (
     <div className="site-controls">
       <div className="control-group" aria-label="Theme options">
@@ -10,10 +18,10 @@ export function ThemeLanguageControls() {
         </button>
       </div>
       <div className="control-group" aria-label="Language options">
-        <a className="control-button" href="/" hrefLang="es-DO">
+        <a className="control-button" href={languagePaths.es} hrefLang="es-DO">
           ES
         </a>
-        <a className="control-button" href="/en/" hrefLang="en">
+        <a className="control-button" href={languagePaths.en} hrefLang="en">
           EN
         </a>
       </div>
