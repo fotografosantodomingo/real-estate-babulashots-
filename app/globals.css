@@ -249,6 +249,28 @@ p {
   color: rgba(255, 255, 255, .7);
 }
 
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-bottom: .9rem;
+  color: rgba(255,255,255,.72);
+  font-size: .86rem;
+  font-weight: 720;
+}
+
+.breadcrumbs a {
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,.5);
+}
+
+.breadcrumbs span + span::before,
+.breadcrumbs a + span::before {
+  content: "/";
+  margin-right: .45rem;
+  color: rgba(255,255,255,.5);
+}
+
 .hero-actions,
 .cta-actions {
   display: flex;
@@ -608,6 +630,31 @@ summary {
 
 .footer-links a {
   color: rgba(255,255,255,.86);
+}
+
+.footer-areas {
+  flex-basis: 100%;
+  border-top: 1px solid rgba(255,255,255,.16);
+  padding-top: 1.3rem;
+}
+
+.footer-areas p {
+  margin: 0 0 .8rem;
+  color: rgba(255,255,255,.72);
+  font-size: .82rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.footer-areas div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem 1rem;
+}
+
+.footer-areas a {
+  color: rgba(255,255,255,.86);
+  font-size: .92rem;
 }
 
 @media (max-width: 900px) {

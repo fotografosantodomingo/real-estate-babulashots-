@@ -5,7 +5,7 @@ import { FaqBlock } from "@/components/FaqBlock";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
-import { assetPath, breadcrumbSchema, cityAreaServed, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
+import { assetPath, breadcrumbSchema, cityAreaServed, canonicalUrl, mainBrandUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
 import { cityPath, realEstateCities, type RealEstateCity } from "@/lib/realEstateCities";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { realEstatePackages } from "@/lib/realEstatePackages";
@@ -13,12 +13,18 @@ import { realEstatePackages } from "@/lib/realEstatePackages";
 export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCity; locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
   const path = cityPath(city, locale);
-  const title = isEnglish ? city.enH1 : city.h1;
+  const title = isEnglish ? `Professional real estate photographer in ${city.city}` : `Fotografo inmobiliario profesional en ${city.city}`;
   const faq = (isEnglish ? city.enFaq : city.faq) ?? [];
   const marketNotes = (isEnglish ? city.enMarketNotes : city.marketNotes) ?? [];
   const localSeoSections = (isEnglish ? city.enLocalSeoSections : city.localSeoSections) ?? [];
   const targetAudience = isEnglish ? city.enTargetAudience : city.targetAudience;
   const packageRows = realEstatePackages.filter((item) => item.priceValueDop);
+  const localServiceLinks = [
+    realEstateServices.find((service) => service.slug === "foto-video-inmobiliario"),
+    realEstateServices.find((service) => service.slug === "fotografia-drone-inmobiliaria"),
+    realEstateServices.find((service) => service.slug === "fotografia-para-airbnb-villas"),
+    realEstateServices.find((service) => service.slug === "precios-fotografia-inmobiliaria-republica-dominicana")
+  ].filter((service): service is (typeof realEstateServices)[number] => Boolean(service));
   const schema = [
     {
       "@context": "https://schema.org",
@@ -53,6 +59,25 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
     },
     {
       "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: `${title} - Babula Shots`,
+      url: canonicalUrl(path),
+      telephone: phoneE164,
+      image: `${siteUrl}${city.image}`,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: city.city,
+        addressRegion: city.province,
+        addressCountry: "DO"
+      },
+      areaServed: [
+        cityAreaServed(city.city, city.province),
+        ...city.areas.map((area) => ({ "@type": "Place", name: area }))
+      ],
+      priceRange: "$$"
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "Service",
       name: title,
       serviceType: "Real estate photography",
@@ -80,7 +105,8 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
       }))
     },
     breadcrumbSchema([
-      { name: "Babula Shots Inmobiliaria", path: isEnglish ? "/en/" : "/" },
+      { name: "Home", path: isEnglish ? "/en/" : "/" },
+      { name: isEnglish ? "Cities" : "Ciudades", path: isEnglish ? "/en/" : "/" },
       { name: title, path }
     ])
   ];
@@ -91,11 +117,16 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
       <section className="hero service-hero">
         <Image src={assetPath(city.image)} alt={title} width={1672} height={941} priority fetchPriority="high" className="hero-image" />
         <div className="hero-content">
+          <nav className="breadcrumbs" aria-label={isEnglish ? "Breadcrumbs" : "Migas de pan"}>
+            <Link href={isEnglish ? "/en/" : "/"}>Home</Link>
+            <span>{isEnglish ? "Cities" : "Ciudades"}</span>
+            <span>{city.city}</span>
+          </nav>
           <p className="eyebrow">Babula Shots · {city.province}</p>
           <h1>{title}</h1>
           <p>{isEnglish ? city.enIntro : city.intro}</p>
           <div className="hero-actions">
-            <a className="button button-light" href="#contacto">{isEnglish ? "Request quote" : "Cotizar"}</a>
+            <a className="button button-light" href="#contacto">{isEnglish ? "Book / request quote" : "Reservar / cotizar"}</a>
             <a className="button button-ghost" href={withBasePath(servicePath(realEstateServices[1], locale))}>{isEnglish ? "Photo + video" : "Foto + video"}</a>
           </div>
         </div>
@@ -106,7 +137,12 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
           <p className="section-tag">{isEnglish ? "Local context" : "Contexto local"}</p>
           <div>
             <h2>{isEnglish ? `Property media for ${city.city}` : `Contenido inmobiliario para ${city.city}`}</h2>
-            <p>{isEnglish ? city.enLocalAngle : city.localAngle}</p>
+            <p>
+              <a href={mainBrandUrl}>Babula Shots</a>{" "}
+              {isEnglish
+                ? `creates professional real estate media in ${city.city}. ${city.enLocalAngle}`
+                : `crea contenido inmobiliario profesional en ${city.city}. ${city.localAngle}`}
+            </p>
             {targetAudience ? <p>{targetAudience}</p> : null}
             <ul className="chip-list">
               {city.propertyTypes.map((type) => <li key={type}>{type}</li>)}
@@ -129,6 +165,31 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
           </div>
         </section>
       ) : null}
+
+      <section className="section">
+        <div className="wrap split">
+          <p className="section-tag">{isEnglish ? "Why us" : "Por que nosotros"}</p>
+          <div>
+            <h2>{isEnglish ? `Why Babula Shots in ${city.city}` : `Por que Babula Shots en ${city.city}`}</h2>
+            <p>
+              {isEnglish
+                ? `We plan each session around local logistics: access, security, sunlight, parking, building rules, community permissions and whether drone is useful or permitted in the area. In ${city.city}, a strong gallery should explain the property and the surrounding value quickly, especially in zones such as ${city.areas.join(", ")}.`
+                : `Planificamos cada sesion segun la logistica local: acceso, seguridad, luz solar, parqueo, reglas del edificio, permisos de comunidad y si el drone aporta o esta permitido en la zona. En ${city.city}, una galeria fuerte debe explicar la propiedad y el valor del entorno rapido, especialmente en zonas como ${city.areas.join(", ")}.`}
+            </p>
+            <p>
+              {isEnglish
+                ? `For gated communities, towers, resorts and private villas, we confirm what can be captured before arrival. Drone work is treated carefully: weather, wind, privacy, flight restrictions and community rules are reviewed so the content supports the sale without creating problems for the owner or agent.`
+                : `Para comunidades cerradas, torres, resorts y villas privadas, confirmamos antes de llegar que se puede capturar. El trabajo con drone se maneja con cuidado: clima, viento, privacidad, restricciones de vuelo y reglas de comunidad se revisan para que el contenido apoye la venta sin crear problemas al propietario o agente.`}
+            </p>
+            <ul className="service-list">
+              {(isEnglish
+                ? ["Local shot plan", "Drone and access coordination", "Portal-ready exports", "WhatsApp booking support"]
+                : ["Plan de tomas local", "Coordinacion de drone y acceso", "Exportacion lista para portales", "Soporte de reserva por WhatsApp"]
+              ).map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
 
       {localSeoSections.length ? (
         <section className="section">
@@ -211,6 +272,46 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
 
       <Integrations locale={locale} />
       {faq.length ? <FaqBlock items={faq} /> : null}
+
+      <section className="section alt-section">
+        <div className="wrap split">
+          <p className="section-tag">{isEnglish ? "Local services" : "Servicios locales"}</p>
+          <div>
+            <h2>{isEnglish ? `Services available in ${city.city}` : `Servicios disponibles en ${city.city}`}</h2>
+            <p>
+              {isEnglish
+                ? `Choose the service path that matches the property. These links help users and search engines connect ${city.city} with the most relevant media services.`
+                : `Elige el servicio que corresponde a la propiedad. Estos enlaces ayudan a usuarios y buscadores a conectar ${city.city} con los servicios de contenido mas relevantes.`}
+            </p>
+            <div className="related-links">
+              {localServiceLinks.map((service) => (
+                <Link href={servicePath(service, locale)} key={service.slug}>{isEnglish ? service.enH1 : service.h1}</Link>
+              ))}
+              <a href={mainBrandUrl}>{isEnglish ? `Babula Shots photographer in Dominican Republic` : `Fotografo en Republica Dominicana`}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap split">
+          <p className="section-tag">{isEnglish ? "Reviews" : "Resenas"}</p>
+          <div>
+            <h2>{isEnglish ? `Verified local proof for ${city.city}` : `Prueba local verificada para ${city.city}`}</h2>
+            <p>
+              {isEnglish
+                ? `We do not publish fake reviews or unsupported star ratings. When verified testimonials from ${city.city} clients are approved for public use, this section can display them with the exact service, property type and permission status.`
+                : `No publicamos resenas falsas ni ratings sin soporte. Cuando haya testimonios verificados de clientes en ${city.city} aprobados para uso publico, esta seccion puede mostrarlos con servicio exacto, tipo de propiedad y estado de permiso.`}
+            </p>
+            <ul className="service-list">
+              {(isEnglish
+                ? ["Verified client name or approved anonymous credit", "Property type and city", "Service delivered", "No fake star ratings"]
+                : ["Nombre verificado o credito anonimo aprobado", "Tipo de propiedad y ciudad", "Servicio realizado", "Sin ratings falsos"]
+              ).map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
 
       {city.areas.length ? (
         <section className="section">
