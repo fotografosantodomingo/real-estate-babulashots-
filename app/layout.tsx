@@ -57,6 +57,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         {children}
         <SiteFooter />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var d=document;function s(t){d.documentElement.dataset.theme=t;localStorage.setItem('theme',t);d.querySelectorAll('[data-theme-choice]').forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-theme-choice')===t))})}s(d.documentElement.dataset.theme||'light');d.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-theme-choice]');if(b)s(b.getAttribute('data-theme-choice'))})}catch(e){}"
+          }}
+        />
       </body>
     </html>
   );
