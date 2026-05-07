@@ -335,6 +335,13 @@ p {
   gap: 1rem;
 }
 
+.authority-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
 .small-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -444,6 +451,14 @@ p {
 
 .package-card {
   min-height: 280px;
+}
+
+.authority-card {
+  min-height: 0;
+}
+
+.authority-card .service-list {
+  display: grid;
 }
 
 .price-line {
@@ -578,6 +593,7 @@ summary {
   }
 
   .card-grid,
+  .authority-grid,
   .small-grid,
   .property-gallery {
     grid-template-columns: 1fr;

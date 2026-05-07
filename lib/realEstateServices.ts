@@ -19,6 +19,12 @@ export type RealEstateService = {
   enBuyerIntent?: string;
   useCases?: string[];
   enUseCases?: string[];
+  authorityIntro?: string[];
+  enAuthorityIntro?: string[];
+  authoritySections?: Array<{ heading: string; body: string; items: string[] }>;
+  enAuthoritySections?: Array<{ heading: string; body: string; items: string[] }>;
+  customFaq?: Array<{ question: string; answer: string }>;
+  enCustomFaq?: Array<{ question: string; answer: string }>;
   recommendedLinks?: string[];
   whatsappMessage: string;
 };
@@ -201,19 +207,19 @@ export const realEstateServices: RealEstateService[] = [
   {
     slug: "fotografia-para-proyectos-inmobiliarios",
     enSlug: "real-estate-development-photography",
-    title: "Fotografia para proyectos inmobiliarios | Babula Shots",
+    title: "Fotografia para proyectos inmobiliarios en RD | Babula Shots",
     enTitle: "Real estate development photography | Babula Shots",
-    description: "Foto, video y drone para proyectos inmobiliarios, torres, preventas, avances de obra y lanzamientos.",
-    enDescription: "Photo, video and drone for developments, towers, presales, construction progress and launches.",
+    description: "Foto, video, drone y contenido comercial para proyectos inmobiliarios en RD: torres, villas, preventas, unidad modelo, avances de obra y lanzamientos.",
+    enDescription: "Photo, video, drone and commercial content for real estate developments in DR: towers, villas, presales, model units, construction progress and launches.",
     h1: "Fotografia para proyectos inmobiliarios",
     enH1: "Real estate development photography",
-    intro: "Documentamos proyectos para preventa, brochures, redes, web, avance de obra y materiales comerciales.",
-    enIntro: "We document developments for presale, brochures, social media, web, construction progress and sales materials.",
-    deliverables: ["Fotos de proyecto", "Drone", "Video de avance", "Reels", "Banco de imagenes"],
-    enDeliverables: ["Development photos", "Drone", "Progress video", "Reels", "Image bank"],
-    proof: "Para constructoras y desarrolladores que necesitan vender antes, durante y despues de la construccion.",
-    enProof: "For builders and developers who need to sell before, during and after construction.",
-    whatsappMessage: quote("fotografia para proyectos inmobiliarios")
+    intro: "Creamos fotografia, video, drone y contenido comercial para preventas, lanzamientos, avances de obra, unidades modelo, brochures, websites y equipos de venta.",
+    enIntro: "We create photography, video, drone and commercial content for presales, launches, construction progress, model units, brochures, websites and sales teams.",
+    deliverables: ["Unidad modelo", "Avance de obra", "Drone de ubicacion", "Video comercial", "Reels para lanzamiento", "Banco de imagenes", "Fotos para brochure y web"],
+    enDeliverables: ["Model unit", "Construction progress", "Location drone", "Commercial video", "Launch reels", "Image bank", "Brochure and website photos"],
+    proof: "Para constructoras y desarrolladores que necesitan vender confianza, ubicacion, escala, amenidades y progreso real antes, durante y despues de la construccion.",
+    enProof: "For builders and developers who need to sell confidence, location, scale, amenities and real progress before, during and after construction.",
+    whatsappMessage: "Hola, busco foto, video y drone para un proyecto inmobiliario. Necesito contenido para preventa, avance de obra o lanzamiento. Podemos coordinar una llamada?"
   },
   {
     slug: "fotografia-arquitectura-interiores",
@@ -285,7 +291,7 @@ export const realEstateServices: RealEstateService[] = [
   }
 ];
 
-const serviceDetails: Record<string, Pick<RealEstateService, "buyerIntent" | "enBuyerIntent" | "useCases" | "enUseCases" | "recommendedLinks">> = {
+const serviceDetails: Record<string, Pick<RealEstateService, "buyerIntent" | "enBuyerIntent" | "useCases" | "enUseCases" | "authorityIntro" | "enAuthorityIntro" | "authoritySections" | "enAuthoritySections" | "customFaq" | "enCustomFaq" | "recommendedLinks">> = {
   "fotografia-inmobiliaria-republica-dominicana": {
     buyerIntent: "Para propietarios, agentes y desarrolladores que necesitan una galeria base confiable antes de agregar video, drone o reels.",
     enBuyerIntent: "For owners, agents and developers who need a reliable base gallery before adding video, drone or reels.",
@@ -357,10 +363,90 @@ const serviceDetails: Record<string, Pick<RealEstateService, "buyerIntent" | "en
     recommendedLinks: ["fotografia-drone-inmobiliaria", "foto-video-inmobiliario", "precios-fotografia-inmobiliaria-republica-dominicana"]
   },
   "fotografia-para-proyectos-inmobiliarios": {
-    buyerIntent: "Para desarrolladores que necesitan explicar avance, ubicacion, renders existentes, unidad modelo y confianza de preventa.",
-    enBuyerIntent: "For developers who need to explain progress, location, existing renders, model unit and presale confidence.",
-    useCases: ["Avance de obra", "Unidad modelo", "Drone de ubicacion", "Contenido para lanzamiento y brochure"],
-    enUseCases: ["Construction progress", "Model unit", "Location drone", "Launch and brochure content"],
+    buyerIntent: "Para desarrolladores, constructoras y equipos comerciales que necesitan explicar el proyecto antes de que el comprador pueda verlo completo: ubicacion, avance, unidad modelo, amenidades, escala, terminaciones y confianza de entrega.",
+    enBuyerIntent: "For developers, builders and sales teams that need to explain the project before buyers can see it finished: location, progress, model unit, amenities, scale, finishes and delivery confidence.",
+    useCases: ["Avance de obra mensual", "Unidad modelo y apartamentos muestra", "Drone de ubicacion y entorno", "Contenido para lanzamiento, brochure, web y sala de ventas", "Reels para preventa y captacion de leads", "Fotos de amenidades, lobby, piscina, parqueos y vistas"],
+    enUseCases: ["Monthly construction progress", "Model units and show apartments", "Location and surroundings drone", "Launch, brochure, website and sales-room content", "Presale reels and lead generation", "Amenity, lobby, pool, parking and view photos"],
+    authorityIntro: [
+      "Un proyecto inmobiliario no se vende igual que una propiedad terminada. En una torre en Santo Domingo, un proyecto turistico en Punta Cana o un desarrollo de villas en Cap Cana, el comprador necesita entender una promesa: donde esta, como avanza, que se entrega, que amenidades tendra y por que debe confiar antes de visitar o reservar.",
+      "Por eso la fotografia para proyectos inmobiliarios debe funcionar como material comercial, no solo como fotos bonitas. La sesion debe producir piezas que sirvan para portales, brochure, landing page, redes sociales, WhatsApp, presentaciones de inversionistas, sala de ventas y seguimiento mensual de obra.",
+      "Babula Shots prepara contenido para cada etapa del desarrollo: terreno y ubicacion, avance de construccion, unidad modelo, areas comunes, entrega final y contenido recurrente para mantener activa la preventa."
+    ],
+    enAuthorityIntro: [
+      "A real estate development is not sold like a finished listing. For a tower in Santo Domingo, a tourism project in Punta Cana or a villa development in Cap Cana, the buyer needs to understand a promise: where it is, how it is progressing, what will be delivered, which amenities matter and why they can trust it before visiting or reserving.",
+      "That is why development photography has to work as sales material, not only as attractive images. The shoot should create assets for portals, brochures, landing pages, social media, WhatsApp, investor decks, sales rooms and monthly construction updates.",
+      "Babula Shots prepares content for each stage of the development: land and location, construction progress, model unit, common areas, final delivery and recurring presale content."
+    ],
+    authoritySections: [
+      {
+        heading: "Contenido por etapa del proyecto",
+        body: "Cada etapa necesita un enfoque distinto. En preventa se vende ubicacion, concepto y confianza; durante obra se documenta progreso real; en unidad modelo se muestran terminaciones, distribucion y estilo de vida; en entrega final se crea el banco visual que alimenta anuncios y redes.",
+        items: ["Terreno, entorno y accesos con drone", "Avance de obra para reportes y redes", "Unidad modelo, lobby y amenidades", "Fotos finales para brochure, web y portales"]
+      },
+      {
+        heading: "Mercados donde esta pagina debe competir",
+        body: "En Santo Domingo suelen dominar torres residenciales, apartamentos en preventa y proyectos corporativos. En Punta Cana, Bavaro, Cap Cana y Casa de Campo pesa mas la inversion extranjera, el alquiler vacacional, las villas, los resorts y la cercania a playa, golf o marina.",
+        items: ["Torres en Piantini, Naco, Bella Vista y Evaristo Morales", "Proyectos turisticos en Punta Cana, Bavaro y Cap Cana", "Villas y comunidades premium en Casa de Campo y La Romana", "Desarrollos emergentes en Miches, Samana y Puerto Plata"]
+      },
+      {
+        heading: "Entregables comerciales que ayudan a vender",
+        body: "La meta es que el equipo comercial pueda publicar, enviar y presentar el proyecto sin improvisar. Organizamos las tomas por uso: hero image, recorrido, amenidades, contexto aereo, detalles de terminacion, clips verticales y material para anuncios.",
+        items: ["Galeria web y brochure horizontal", "Clips verticales para Instagram, TikTok y WhatsApp", "Fotos optimizadas para Point2Homes, TerrenosRD y landing pages", "Banco de imagenes para publicaciones durante varias semanas"]
+      }
+    ],
+    enAuthoritySections: [
+      {
+        heading: "Content by development stage",
+        body: "Each stage needs a different focus. In presale, the media sells location, concept and trust; during construction, it documents real progress; in the model unit, it shows finishes, layout and lifestyle; at delivery, it creates the image bank for ads and social media.",
+        items: ["Land, surroundings and access with drone", "Construction progress for reports and social media", "Model unit, lobby and amenities", "Final photos for brochures, websites and portals"]
+      },
+      {
+        heading: "Markets this page has to compete in",
+        body: "Santo Domingo is usually driven by residential towers, presale apartments and corporate projects. Punta Cana, Bavaro, Cap Cana and Casa de Campo depend more on foreign investors, vacation rentals, villas, resorts and proximity to beach, golf or marina.",
+        items: ["Towers in Piantini, Naco, Bella Vista and Evaristo Morales", "Tourism developments in Punta Cana, Bavaro and Cap Cana", "Premium villas and communities in Casa de Campo and La Romana", "Emerging developments in Miches, Samana and Puerto Plata"]
+      },
+      {
+        heading: "Commercial deliverables that help sell",
+        body: "The goal is for the sales team to publish, send and present the development without improvising. We organize the shot list by use: hero image, walkthrough, amenities, aerial context, finish details, vertical clips and ad material.",
+        items: ["Horizontal web and brochure gallery", "Vertical clips for Instagram, TikTok and WhatsApp", "Photos optimized for Point2Homes, TerrenosRD and landing pages", "Image bank for several weeks of publishing"]
+      }
+    ],
+    customFaq: [
+      {
+        question: "Que tipo de contenido necesita una torre en preventa en Santo Domingo?",
+        answer: "Normalmente recomendamos una combinacion de drone de ubicacion, fotos del solar o avance, unidad modelo si existe, amenidades, renders integrados en la narrativa comercial y clips verticales para captar leads. En zonas como Piantini, Naco, Bella Vista o Evaristo Morales, tambien conviene mostrar accesos, vistas, lobby, parqueos y contexto urbano."
+      },
+      {
+        question: "Sirven estas fotos para brochure, landing page y Point2Homes?",
+        answer: "Si. Organizamos la entrega para que el equipo pueda usar archivos horizontales en brochure y web, versiones ligeras para landing page, imagenes verticales para redes y fotos de portada para portales como Point2Homes, TerrenosRD o publicaciones directas por WhatsApp."
+      },
+      {
+        question: "Pueden hacer seguimiento mensual de avance de obra?",
+        answer: "Si. Para constructoras y desarrolladores podemos crear un plan mensual con fotos, drone y video corto del avance. Esto ayuda a mostrar progreso real a compradores, inversionistas y agentes sin depender solamente de renders."
+      },
+      {
+        question: "Que conviene para un proyecto turistico en Punta Cana o Cap Cana?",
+        answer: "En proyectos turisticos el drone es clave para mostrar playa, golf, marina, accesos, amenidades y escala. Tambien recomendamos fotos de lifestyle, interiores de unidad modelo, piscina, areas sociales y clips verticales pensados para inversionistas extranjeros y alquiler vacacional."
+      }
+    ],
+    enCustomFaq: [
+      {
+        question: "What content does a presale tower in Santo Domingo need?",
+        answer: "We usually recommend location drone, land or construction progress photos, model unit media when available, amenities, renders integrated into the sales story and vertical clips for lead generation. In areas like Piantini, Naco, Bella Vista or Evaristo Morales, it also helps to show access, views, lobby, parking and urban context."
+      },
+      {
+        question: "Can these images be used for brochures, landing pages and Point2Homes?",
+        answer: "Yes. We organize delivery so the team can use horizontal files for brochures and websites, lighter versions for landing pages, vertical images for social media and cover photos for portals like Point2Homes, TerrenosRD or direct WhatsApp sharing."
+      },
+      {
+        question: "Can you create monthly construction progress content?",
+        answer: "Yes. For builders and developers we can create a monthly plan with photos, drone and a short progress video. This helps show real progress to buyers, investors and agents instead of depending only on renders."
+      },
+      {
+        question: "What works best for a tourism development in Punta Cana or Cap Cana?",
+        answer: "For tourism projects, drone is key to show beach, golf, marina, access, amenities and scale. We also recommend lifestyle photos, model-unit interiors, pool, social areas and vertical clips designed for foreign investors and vacation-rental buyers."
+      }
+    ],
     recommendedLinks: ["contenido-para-inmobiliarias-constructoras", "fotografia-drone-inmobiliaria", "video-inmobiliario-republica-dominicana"]
   },
   "fotografia-arquitectura-interiores": {

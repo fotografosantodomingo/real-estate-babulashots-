@@ -20,6 +20,9 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
   const buyerIntent = isEnglish ? service.enBuyerIntent : service.buyerIntent;
   const deliverables = isEnglish ? service.enDeliverables : service.deliverables;
   const proof = isEnglish ? service.enProof : service.proof;
+  const authorityIntro = (isEnglish ? service.enAuthorityIntro : service.authorityIntro) ?? [];
+  const authoritySections = (isEnglish ? service.enAuthoritySections : service.authoritySections) ?? [];
+  const customFaq = (isEnglish ? service.enCustomFaq : service.customFaq) ?? [];
   const relatedItems = (service.recommendedLinks ?? [])
     .map((slug) => {
       const serviceMatch = realEstateServices.find((item) => item.slug === slug);
@@ -31,7 +34,7 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
       return null;
     })
     .filter((item): item is { slug: string; href: string; label: string } => Boolean(item));
-  const faq = [
+  const defaultFaq = [
     {
       question: isEnglish ? `When is ${serviceLabel} the right service?` : `Cuando conviene ${serviceLabel}?`,
       answer: buyerIntent ?? (isEnglish ? service.enIntro : service.intro)
@@ -47,6 +50,7 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
         : (isEnglish ? "Yes. The package can be adapted with photo, video, drone or reels depending on the property." : "Si. El paquete puede adaptarse con foto, video, drone o reels segun la propiedad.")
     }
   ];
+  const faq = customFaq.length ? customFaq : defaultFaq;
   const schema = [
     {
       "@context": "https://schema.org",
@@ -130,6 +134,31 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
             <div>
               <h2>{isEnglish ? "Where this service works best" : "Donde este servicio funciona mejor"}</h2>
               <ul className="service-list">{useCases.map((item) => <li key={item}>{item}</li>)}</ul>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {authorityIntro.length || authoritySections.length ? (
+        <section className="section alt-section">
+          <div className="wrap split">
+            <p className="section-tag">{isEnglish ? "Sales strategy" : "Estrategia comercial"}</p>
+            <div>
+              <h2>{isEnglish ? "Media planned for development sales" : "Contenido pensado para vender proyectos"}</h2>
+              {authorityIntro.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+              {authoritySections.length ? (
+                <div className="authority-grid">
+                  {authoritySections.map((section) => (
+                    <article className="card authority-card" key={section.heading}>
+                      <span>{section.heading}</span>
+                      <p>{section.body}</p>
+                      <ul className="service-list">
+                        {section.items.map((item) => <li key={item}>{item}</li>)}
+                      </ul>
+                    </article>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
         </section>
