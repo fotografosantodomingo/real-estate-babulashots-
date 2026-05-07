@@ -15,6 +15,11 @@ export type RealEstateService = {
   enDeliverables: string[];
   proof: string;
   enProof: string;
+  buyerIntent?: string;
+  enBuyerIntent?: string;
+  useCases?: string[];
+  enUseCases?: string[];
+  recommendedLinks?: string[];
   whatsappMessage: string;
 };
 
@@ -279,6 +284,122 @@ export const realEstateServices: RealEstateService[] = [
     whatsappMessage: routeMessage("precios-fotografia-inmobiliaria-republica-dominicana")
   }
 ];
+
+const serviceDetails: Record<string, Pick<RealEstateService, "buyerIntent" | "enBuyerIntent" | "useCases" | "enUseCases" | "recommendedLinks">> = {
+  "fotografia-inmobiliaria-republica-dominicana": {
+    buyerIntent: "Para propietarios, agentes y desarrolladores que necesitan una galeria base confiable antes de agregar video, drone o reels.",
+    enBuyerIntent: "For owners, agents and developers who need a reliable base gallery before adding video, drone or reels.",
+    useCases: ["Publicar en Point2Homes o TerrenosRD", "Enviar propiedades por WhatsApp", "Actualizar inventario de una inmobiliaria", "Preparar una propiedad para venta o renta"],
+    enUseCases: ["Publish on Point2Homes or TerrenosRD", "Send properties by WhatsApp", "Update brokerage inventory", "Prepare a property for sale or rent"],
+    recommendedLinks: ["foto-video-inmobiliario", "fotografia-drone-inmobiliaria", "precios-fotografia-inmobiliaria-republica-dominicana"]
+  },
+  "foto-video-inmobiliario": {
+    buyerIntent: "Para propiedades donde una foto no explica suficiente: villas, apartamentos grandes, torres con amenidades y proyectos que necesitan recorrido.",
+    enBuyerIntent: "For properties where photos are not enough: villas, large apartments, towers with amenities and developments that need a walkthrough.",
+    useCases: ["Video recorrido para compradores remotos", "Clips verticales para Instagram", "Foto + video para lanzamiento de listado", "Miniaturas y versiones para redes"],
+    enUseCases: ["Walkthrough video for remote buyers", "Vertical clips for Instagram", "Photo + video for listing launches", "Thumbnails and social versions"],
+    recommendedLinks: ["fotografia-drone-inmobiliaria", "reels-inmobiliarios", "fotografia-para-proyectos-inmobiliarios"]
+  },
+  "video-inmobiliario-republica-dominicana": {
+    buyerIntent: "Para vender flujo, escala, amenidades y experiencia cuando el cliente no puede visitar la propiedad de inmediato.",
+    enBuyerIntent: "For selling flow, scale, amenities and experience when the buyer cannot visit immediately.",
+    useCases: ["Recorrido horizontal para web", "Video vertical para redes", "Video para inversionistas extranjeros", "Clips de amenidades y detalles"],
+    enUseCases: ["Horizontal walkthrough for web", "Vertical video for social", "Video for foreign investors", "Amenity and detail clips"],
+    recommendedLinks: ["foto-video-inmobiliario", "reels-inmobiliarios", "fotografia-drone-inmobiliaria"]
+  },
+  "fotografia-drone-inmobiliaria": {
+    buyerIntent: "Para propiedades donde ubicacion, escala, vista o terreno son parte central del valor.",
+    enBuyerIntent: "For properties where location, scale, view or land are central to the value.",
+    useCases: ["Villas con piscina y lote", "Terrenos y proyectos en desarrollo", "Resorts y hoteles", "Torres con contexto urbano"],
+    enUseCases: ["Villas with pool and land", "Land and developments", "Resorts and hotels", "Towers with urban context"],
+    recommendedLinks: ["video-inmobiliario-republica-dominicana", "fotografia-para-proyectos-inmobiliarios", "precios-fotografia-inmobiliaria-republica-dominicana"]
+  },
+  "reels-inmobiliarios": {
+    buyerIntent: "Para agentes que necesitan atencion rapida en redes sin convertir cada propiedad en una produccion larga.",
+    enBuyerIntent: "For agents who need fast attention on social media without turning every listing into a long production.",
+    useCases: ["Reel de propiedad nueva", "Tour rapido para historias", "Contenido semanal para agentes", "Version vertical de video recorrido"],
+    enUseCases: ["New listing reel", "Quick tour for stories", "Weekly agent content", "Vertical version of walkthrough video"],
+    recommendedLinks: ["contenido-para-agentes-inmobiliarios", "foto-video-inmobiliario", "video-inmobiliario-republica-dominicana"]
+  },
+  "contenido-para-agentes-inmobiliarios": {
+    buyerIntent: "Para agentes que quieren verse consistentes y profesionales frente a propietarios, compradores e inversionistas.",
+    enBuyerIntent: "For agents who want to look consistent and professional to owners, buyers and investors.",
+    useCases: ["Listados semanales", "Reels de propiedades", "Foto profesional del inventario", "Contenido para marca personal"],
+    enUseCases: ["Weekly listings", "Property reels", "Professional inventory photos", "Personal brand content"],
+    recommendedLinks: ["reels-inmobiliarios", "fotografia-para-apartamentos-en-venta", "precios-fotografia-inmobiliaria-republica-dominicana"]
+  },
+  "contenido-para-inmobiliarias-constructoras": {
+    buyerIntent: "Para equipos que necesitan una linea visual coherente en inventario, preventa, obra, brochure y redes.",
+    enBuyerIntent: "For teams that need a coherent visual line across inventory, presale, construction, brochures and social media.",
+    useCases: ["Banco de imagenes de proyecto", "Avance de obra con drone", "Contenido para brochure", "Material para equipo de ventas"],
+    enUseCases: ["Development image bank", "Construction progress with drone", "Brochure media", "Sales team materials"],
+    recommendedLinks: ["fotografia-para-proyectos-inmobiliarios", "fotografia-drone-inmobiliaria", "contenido-para-desarrolladores-inmobiliarios"]
+  },
+  "fotografia-para-airbnb-villas": {
+    buyerIntent: "Para vender experiencia vacacional: piscina, terraza, habitaciones, cocina, vistas, detalles y confianza para reservar.",
+    enBuyerIntent: "For selling the vacation experience: pool, terrace, bedrooms, kitchen, views, details and booking confidence.",
+    useCases: ["Portada para Airbnb", "Galeria para villas turisticas", "Fotos para Booking y website", "Detalles de lifestyle y amenidades"],
+    enUseCases: ["Airbnb cover image", "Tourist villa gallery", "Photos for Booking and website", "Lifestyle and amenity details"],
+    recommendedLinks: ["reels-inmobiliarios", "fotografia-drone-inmobiliaria", "fotografia-para-villas-de-lujo"]
+  },
+  "fotografia-para-apartamentos-en-venta": {
+    buyerIntent: "Para vender espacio funcional: distribucion, luz, balcon, cocina, habitaciones, lobby, parqueos y amenidades del edificio.",
+    enBuyerIntent: "For selling functional living space: layout, light, balcony, kitchen, bedrooms, lobby, parking and building amenities.",
+    useCases: ["Apartamentos en torres", "Reventas y alquileres", "Unidades modelo", "Anuncios para Point2Homes y WhatsApp"],
+    enUseCases: ["Tower apartments", "Resales and rentals", "Model units", "Point2Homes and WhatsApp listings"],
+    recommendedLinks: ["fotografia-inmobiliaria-santo-domingo", "fotografia-drone-inmobiliaria", "foto-video-inmobiliario"]
+  },
+  "fotografia-para-casas-en-venta": {
+    buyerIntent: "Para mostrar fachada, terreno, distribucion familiar, patio, seguridad y detalles que justifican el precio de una casa.",
+    enBuyerIntent: "For showing facade, land, family layout, yard, security and details that justify a home's price.",
+    useCases: ["Casas familiares", "Residenciales cerrados", "Villas urbanas", "Casas con patio o piscina"],
+    enUseCases: ["Family homes", "Gated communities", "Urban villas", "Homes with yard or pool"],
+    recommendedLinks: ["fotografia-drone-inmobiliaria", "foto-video-inmobiliario", "precios-fotografia-inmobiliaria-republica-dominicana"]
+  },
+  "fotografia-para-proyectos-inmobiliarios": {
+    buyerIntent: "Para desarrolladores que necesitan explicar avance, ubicacion, renders existentes, unidad modelo y confianza de preventa.",
+    enBuyerIntent: "For developers who need to explain progress, location, existing renders, model unit and presale confidence.",
+    useCases: ["Avance de obra", "Unidad modelo", "Drone de ubicacion", "Contenido para lanzamiento y brochure"],
+    enUseCases: ["Construction progress", "Model unit", "Location drone", "Launch and brochure content"],
+    recommendedLinks: ["contenido-para-inmobiliarias-constructoras", "fotografia-drone-inmobiliaria", "video-inmobiliario-republica-dominicana"]
+  },
+  "fotografia-arquitectura-interiores": {
+    buyerIntent: "Para espacios donde la arquitectura, el diseno interior, materiales y ejecucion visual son el valor principal.",
+    enBuyerIntent: "For spaces where architecture, interior design, materials and visual execution are the main value.",
+    useCases: ["Arquitectos e interioristas", "Hoteles y restaurantes", "Villas premium", "Portafolios editoriales"],
+    enUseCases: ["Architects and interior designers", "Hotels and restaurants", "Premium villas", "Editorial portfolios"],
+    recommendedLinks: ["fotografia-para-villas-de-lujo", "fotografia-para-hoteles-apartahoteles", "edicion-fotos-inmobiliarias"]
+  },
+  "tour-virtual-inmobiliario": {
+    buyerIntent: "Para filtrar interesados y explicar flujo antes de una visita presencial.",
+    enBuyerIntent: "For qualifying leads and explaining flow before an in-person visit.",
+    useCases: ["Recorrido para compradores remotos", "Tour de apartamento", "Tour de villa", "Version vertical para redes"],
+    enUseCases: ["Walkthrough for remote buyers", "Apartment tour", "Villa tour", "Vertical version for social media"],
+    recommendedLinks: ["video-inmobiliario-republica-dominicana", "foto-video-inmobiliario", "reels-inmobiliarios"]
+  },
+  "edicion-fotos-inmobiliarias": {
+    buyerIntent: "Para mejorar fotos existentes con color, verticales, luz y exportacion correcta sin repetir la sesion completa.",
+    enBuyerIntent: "For improving existing photos with color, verticals, light and proper export without repeating the full shoot.",
+    useCases: ["Correccion de verticales", "Balance de color", "Exportacion para portales", "Mejora de fotos de agente"],
+    enUseCases: ["Vertical correction", "Color balance", "Listing export", "Improving agent photos"],
+    recommendedLinks: ["fotografia-inmobiliaria-republica-dominicana", "fotografia-para-apartamentos-en-venta", "precios-fotografia-inmobiliaria-republica-dominicana"]
+  },
+  "precios-fotografia-inmobiliaria-republica-dominicana": {
+    buyerIntent: "Para clientes que necesitan entender rangos antes de pedir una cotizacion formal.",
+    enBuyerIntent: "For clients who need to understand ranges before requesting a formal quote.",
+    useCases: ["Comparar foto, video y drone", "Planificar presupuesto de listado", "Cotizar paquetes para varias propiedades", "Evaluar plan mensual"],
+    enUseCases: ["Compare photo, video and drone", "Plan listing budget", "Quote packages for multiple properties", "Evaluate monthly plans"],
+    recommendedLinks: ["fotografia-inmobiliaria-republica-dominicana", "foto-video-inmobiliario", "fotografia-drone-inmobiliaria"]
+  }
+};
+
+for (const service of realEstateServices) {
+  const details = serviceDetails[service.slug];
+  if (!details) {
+    throw new Error(`Missing unique service details for ${service.slug}`);
+  }
+  Object.assign(service, details);
+}
 
 export function servicePath(service: RealEstateService, locale: "es" | "en" = "es") {
   return locale === "en" ? `/en/${service.enSlug}` : `/${service.slug}`;

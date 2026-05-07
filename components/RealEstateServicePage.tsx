@@ -8,6 +8,7 @@ import { FaqBlock } from "@/components/FaqBlock";
 import { ServicePackages } from "@/components/ServicePackages";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
 import { realEstateCities, cityPath } from "@/lib/realEstateCities";
+import { industryPath, realEstateIndustries } from "@/lib/realEstateIndustries";
 import { realEstatePackages } from "@/lib/realEstatePackages";
 import { realEstateServices, servicePath, type RealEstateService } from "@/lib/realEstateServices";
 import { assetPath, breadcrumbSchema, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
@@ -15,18 +16,36 @@ import { assetPath, breadcrumbSchema, canonicalUrl, phoneE164, siteUrl, withBase
 export function RealEstateServicePage({ service, locale = "es" }: { service: RealEstateService; locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
   const path = servicePath(service, locale);
+  const useCases = (isEnglish ? service.enUseCases : service.useCases) ?? [];
+  const serviceLabel = isEnglish ? service.enH1 : service.h1;
+  const buyerIntent = isEnglish ? service.enBuyerIntent : service.buyerIntent;
+  const deliverables = isEnglish ? service.enDeliverables : service.deliverables;
+  const proof = isEnglish ? service.enProof : service.proof;
+  const relatedItems = (service.recommendedLinks ?? [])
+    .map((slug) => {
+      const serviceMatch = realEstateServices.find((item) => item.slug === slug);
+      if (serviceMatch) return { slug, href: servicePath(serviceMatch, locale), label: isEnglish ? serviceMatch.enH1 : serviceMatch.h1 };
+      const cityMatch = realEstateCities.find((item) => `fotografia-inmobiliaria-${item.slug}` === slug);
+      if (cityMatch) return { slug, href: cityPath(cityMatch, locale), label: isEnglish ? cityMatch.enH1 : cityMatch.h1 };
+      const industryMatch = realEstateIndustries.find((item) => item.slug === slug);
+      if (industryMatch) return { slug, href: industryPath(industryMatch, locale), label: isEnglish ? industryMatch.enH1 : industryMatch.h1 };
+      return null;
+    })
+    .filter((item): item is { slug: string; href: string; label: string } => Boolean(item));
   const faq = [
     {
-      question: isEnglish ? "How fast can the files be delivered?" : "Que tan rapido se entregan los archivos?",
-      answer: isEnglish ? "Delivery depends on property size and package, but real estate listings are prioritized for fast publication." : "La entrega depende del tamano de la propiedad y del paquete, pero los listados inmobiliarios se priorizan para publicacion rapida."
+      question: isEnglish ? `When is ${serviceLabel} the right service?` : `Cuando conviene ${serviceLabel}?`,
+      answer: buyerIntent ?? (isEnglish ? service.enIntro : service.intro)
     },
     {
-      question: isEnglish ? "Can files be prepared for Airbnb, Point2Homes or listing portals?" : "Pueden preparar formatos para Airbnb, Point2Homes o portales?",
-      answer: isEnglish ? "Yes. Files can be exported for listing portals, Airbnb, websites, WhatsApp and social media." : "Si. Los archivos pueden exportarse para portales, Airbnb, websites, WhatsApp y redes sociales."
+      question: isEnglish ? `What does ${serviceLabel} include?` : `Que incluye ${serviceLabel}?`,
+      answer: `${deliverables.join(", ")}. ${proof}`
     },
     {
-      question: isEnglish ? "Can photo, video and drone be combined?" : "Se puede combinar foto, video y drone?",
-      answer: isEnglish ? "Yes. Photo, video, drone and reels can be combined into one property media package." : "Si. Foto, video, drone y reels pueden combinarse en un solo paquete de contenido inmobiliario."
+      question: isEnglish ? "Can it be combined with other property media?" : "Se puede combinar con otros medios inmobiliarios?",
+      answer: relatedItems.length
+        ? `${isEnglish ? "Yes. Common add-ons include" : "Si. Los adicionales comunes son"} ${relatedItems.map((item) => item.label).join(", ")}.`
+        : (isEnglish ? "Yes. The package can be adapted with photo, video, drone or reels depending on the property." : "Si. El paquete puede adaptarse con foto, video, drone o reels segun la propiedad.")
     }
   ];
   const schema = [
@@ -95,15 +114,27 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
           <p className="section-tag">{isEnglish ? "Deliverables" : "Entregables"}</p>
           <div>
             <h2>{isEnglish ? "What is included" : "Que incluye"}</h2>
-            <p>{isEnglish ? service.enProof : service.proof}</p>
+            <p>{proof}</p>
+            <p>{buyerIntent}</p>
             <ul className="service-list">
-              {(isEnglish ? service.enDeliverables : service.deliverables).map((item) => <li key={item}>{item}</li>)}
+              {deliverables.map((item) => <li key={item}>{item}</li>)}
             </ul>
           </div>
         </div>
       </section>
 
       <PropertyGallery locale={locale} />
+      {useCases.length ? (
+        <section className="section">
+          <div className="wrap split">
+            <p className="section-tag">{isEnglish ? "Best fit" : "Mejor uso"}</p>
+            <div>
+              <h2>{isEnglish ? "Where this service works best" : "Donde este servicio funciona mejor"}</h2>
+              <ul className="service-list">{useCases.map((item) => <li key={item}>{item}</li>)}</ul>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className="section alt-section">
         <div className="wrap split">
@@ -132,10 +163,7 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
             <h2>{isEnglish ? "Useful add-ons for this listing" : "Adicionales utiles para este listado"}</h2>
           </div>
           <div className="related-links">
-            {realEstateServices
-              .filter((item) => item.slug !== service.slug)
-              .filter((item) => ["fotografia-drone-inmobiliaria", "foto-video-inmobiliario", "reels-inmobiliarios", "precios-fotografia-inmobiliaria-republica-dominicana"].includes(item.slug))
-              .map((item) => <Link href={servicePath(item, locale)} key={item.slug}>{isEnglish ? item.enH1 : item.h1}</Link>)}
+            {relatedItems.map((item) => <Link href={item.href} key={item.slug}>{item.label}</Link>)}
           </div>
         </div>
       </section>

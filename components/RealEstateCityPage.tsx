@@ -14,16 +14,9 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
   const isEnglish = locale === "en";
   const path = cityPath(city, locale);
   const title = isEnglish ? city.enH1 : city.h1;
-  const faq = [
-    {
-      question: isEnglish ? `Do you photograph properties in ${city.city}?` : `Trabajan propiedades en ${city.city}?`,
-      answer: isEnglish ? `Yes. We create photo, video, drone and listing media for properties in ${city.city} and nearby areas.` : `Si. Creamos foto, video, drone y contenido para propiedades en ${city.city} y zonas cercanas.`
-    },
-    {
-      question: isEnglish ? "Can files be prepared for listing platforms?" : "Pueden preparar archivos para portales inmobiliarios?",
-      answer: isEnglish ? "Yes. Deliverables can be formatted for MLS-style listings, Point2Homes, Airbnb, social media and websites." : "Si. Entregamos formatos listos para MLS-style listings, Point2Homes, Airbnb, redes sociales y websites."
-    }
-  ];
+  const faq = (isEnglish ? city.enFaq : city.faq) ?? [];
+  const marketNotes = (isEnglish ? city.enMarketNotes : city.marketNotes) ?? [];
+  const targetAudience = isEnglish ? city.enTargetAudience : city.targetAudience;
   const schema = [
     {
       "@context": "https://schema.org",
@@ -89,6 +82,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
           <div>
             <h2>{isEnglish ? `Property media for ${city.city}` : `Contenido inmobiliario para ${city.city}`}</h2>
             <p>{isEnglish ? city.enLocalAngle : city.localAngle}</p>
+            {targetAudience ? <p>{targetAudience}</p> : null}
             <ul className="chip-list">
               {city.propertyTypes.map((type) => <li key={type}>{type}</li>)}
             </ul>
@@ -97,24 +91,39 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
       </section>
 
       <PropertyGallery locale={locale} />
-      <BeforeAfterSlider locale={locale} />
-      <Integrations locale={locale} />
-      <FaqBlock items={faq} />
-
-      <section className="section">
-        <div className="wrap split">
-          <p className="section-tag">{isEnglish ? "Areas" : "Zonas"}</p>
-          <div>
-            <h2>{isEnglish ? `Areas served in ${city.city}` : `Zonas cubiertas en ${city.city}`}</h2>
-            <ul className="chip-list">{city.areas.map((area) => <li key={area}>{area}</li>)}</ul>
-            <div className="related-links">
-              {realEstateCities.filter((item) => item.slug !== city.slug).slice(0, 3).map((item) => (
-                <Link key={item.slug} href={cityPath(item, locale)}>{isEnglish ? item.enH1 : item.h1}</Link>
-              ))}
+      {marketNotes.length ? (
+        <section className="section alt-section">
+          <div className="wrap split">
+            <p className="section-tag">{isEnglish ? "Market notes" : "Lectura del mercado"}</p>
+            <div>
+              <h2>{isEnglish ? `What matters in ${city.city}` : `Que importa en ${city.city}`}</h2>
+              <ul className="service-list">
+                {marketNotes.map((item) => <li key={item}>{item}</li>)}
+              </ul>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
+      <BeforeAfterSlider locale={locale} />
+      <Integrations locale={locale} />
+      {faq.length ? <FaqBlock items={faq} /> : null}
+
+      {city.areas.length ? (
+        <section className="section">
+          <div className="wrap split">
+            <p className="section-tag">{isEnglish ? "Areas" : "Zonas"}</p>
+            <div>
+              <h2>{isEnglish ? `Areas served in ${city.city}` : `Zonas cubiertas en ${city.city}`}</h2>
+              <ul className="chip-list">{city.areas.map((area) => <li key={area}>{area}</li>)}</ul>
+              <div className="related-links">
+                {realEstateCities.filter((item) => city.nearby.includes(item.city)).map((item) => (
+                  <Link key={item.slug} href={cityPath(item, locale)}>{isEnglish ? item.enH1 : item.h1}</Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <ConversionPanel
         locale={locale}
