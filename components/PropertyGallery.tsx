@@ -4,30 +4,30 @@ import { assetPath, portfolioUrl } from "@/lib/seo";
 const galleryItems = [
   {
     label: "Interior",
-    src: "/images/legacy-real-estate/santo-domingo-property-interior.webp",
-    width: 1400,
-    height: 826,
+    src: "/images/legacy-real-estate/thumbs/santo-domingo-property-interior-thumb.webp",
+    width: 760,
+    height: 448,
     alt: "Fotografia inmobiliaria de interior en Santo Domingo"
   },
   {
     label: "Villa",
-    src: "/images/legacy-real-estate/real-estate-photography-rd.webp",
-    width: 1000,
-    height: 621,
+    src: "/images/legacy-real-estate/thumbs/real-estate-photography-rd-thumb.webp",
+    width: 760,
+    height: 472,
     alt: "Fotografia profesional inmobiliaria en Republica Dominicana"
   },
   {
     label: "Drone",
-    src: "/images/legacy-real-estate/drone-real-estate-rd.webp",
-    width: 1400,
-    height: 935,
+    src: "/images/legacy-real-estate/thumbs/drone-real-estate-rd-thumb.webp",
+    width: 760,
+    height: 507,
     alt: "Foto drone inmobiliaria para propiedad en Republica Dominicana"
   },
   {
     label: "Airbnb",
-    src: "/images/legacy-real-estate/pictime-property-gallery-cover.webp",
-    width: 1000,
-    height: 590,
+    src: "/images/legacy-real-estate/thumbs/pictime-property-gallery-cover-thumb.webp",
+    width: 760,
+    height: 448,
     alt: "Galeria Babula Shots con propiedades y contenido Airbnb"
   }
 ];
