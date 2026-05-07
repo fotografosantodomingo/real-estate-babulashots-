@@ -5,7 +5,7 @@ import { FaqBlock } from "@/components/FaqBlock";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
-import { assetPath, breadcrumbSchema, cityAreaServed, canonicalUrl, mainBrandUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
+import { assetPath, bookingUrl, breadcrumbSchema, cityAreaServed, canonicalUrl, mainBrandUrl, phoneE164, pricingSourceUrl, santoDomingoHubUrl, siteUrl, withBasePath } from "@/lib/seo";
 import { cityPath, realEstateCities, type RealEstateCity } from "@/lib/realEstateCities";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { realEstatePackages } from "@/lib/realEstatePackages";
@@ -19,6 +19,27 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
   const localSeoSections = (isEnglish ? city.enLocalSeoSections : city.localSeoSections) ?? [];
   const targetAudience = isEnglish ? city.enTargetAudience : city.targetAudience;
   const packageRows = realEstatePackages.filter((item) => item.priceValueDop);
+  const transactionalFaq = [
+    {
+      question: isEnglish ? `How much does a photographer cost in ${city.city}?` : `¿Cuánto cuesta un fotógrafo en ${city.city}?`,
+      answer: isEnglish
+        ? `Real estate media in ${city.city} starts from RD$8,920 for listing photos, RD$9,520 for drone and RD$47,600 for photo + video references. Final price depends on property size, access, travel, urgency and deliverables.`
+        : `El contenido inmobiliario en ${city.city} inicia desde RD$8,920 para fotos de listing, RD$9,520 para drone y RD$47,600 como referencia de foto + video. El precio final depende de tamano, acceso, traslado, urgencia y entregables.`
+    },
+    {
+      question: isEnglish ? `How do I book a session in ${city.city}?` : `Cómo reservar una sesión en ${city.city}?`,
+      answer: isEnglish
+        ? `Use the booking button or WhatsApp CTA and send city, area, property type, number of rooms and whether you need photo, video, drone or reels.`
+        : `Usa el boton de reserva o el CTA de WhatsApp y envia ciudad, zona, tipo de propiedad, cantidad de habitaciones y si necesitas foto, video, drone o reels.`
+    },
+    {
+      question: isEnglish ? `Is transportation included for ${city.city}?` : `¿Incluye transporte para ${city.city}?`,
+      answer: isEnglish
+        ? `Transportation depends on the exact area, schedule and production size. We confirm travel before booking so the quote is clear before the session.`
+        : `El transporte depende de la zona exacta, horario y tamano de produccion. Confirmamos traslado antes de reservar para que la cotizacion quede clara antes de la sesion.`
+    }
+  ];
+  const visibleFaq = [...faq, ...transactionalFaq];
   const localServiceLinks = [
     realEstateServices.find((service) => service.slug === "foto-video-inmobiliario"),
     realEstateServices.find((service) => service.slug === "fotografia-drone-inmobiliaria"),
@@ -42,6 +63,20 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
       url: canonicalUrl(path),
       telephone: phoneE164,
       image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
+      parentOrganization: {
+        "@type": "Organization",
+        name: "Babula Shots RD",
+        url: mainBrandUrl
+      },
+      knowsAbout: [
+        "Fotografia inmobiliaria",
+        "Video inmobiliario",
+        "Drone inmobiliario",
+        "Marketing visual para propiedades",
+        "Fotografia de bodas",
+        "Retratos",
+        "Eventos"
+      ],
       areaServed: cityAreaServed(city.city, city.province),
       priceRange: "$$",
       hasOfferCatalog: {
@@ -64,6 +99,19 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
       url: canonicalUrl(path),
       telephone: phoneE164,
       image: `${siteUrl}${city.image}`,
+      parentOrganization: {
+        "@type": "Organization",
+        name: "Babula Shots RD",
+        url: mainBrandUrl
+      },
+      knowsAbout: [
+        "Fotografia inmobiliaria",
+        "Video inmobiliario",
+        "Drone inmobiliario",
+        "Fotografia de bodas",
+        "Retratos",
+        "Eventos"
+      ],
       address: {
         "@type": "PostalAddress",
         addressLocality: city.city,
@@ -98,7 +146,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity: faq.map((item) => ({
+      mainEntity: visibleFaq.map((item) => ({
         "@type": "Question",
         name: item.question,
         acceptedAnswer: { "@type": "Answer", text: item.answer }
@@ -127,7 +175,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
           <p>{isEnglish ? city.enIntro : city.intro}</p>
           <div className="hero-actions">
             <a className="button button-light" href="#contacto">{isEnglish ? "Book / request quote" : "Reservar / cotizar"}</a>
-            <a className="button button-ghost" href={withBasePath(servicePath(realEstateServices[1], locale))}>{isEnglish ? "Photo + video" : "Foto + video"}</a>
+            <a className="button button-ghost" href={bookingUrl}>{isEnglish ? "Book session" : "Reservar sesión"}</a>
           </div>
         </div>
       </section>
@@ -138,10 +186,9 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
           <div>
             <h2>{isEnglish ? `Property media for ${city.city}` : `Contenido inmobiliario para ${city.city}`}</h2>
             <p>
-              <a href={mainBrandUrl}>Babula Shots</a>{" "}
               {isEnglish
-                ? `creates professional real estate media in ${city.city}. ${city.enLocalAngle}`
-                : `crea contenido inmobiliario profesional en ${city.city}. ${city.localAngle}`}
+                ? <>As part of the <a href={mainBrandUrl}>Babula Shots RD</a> network, our {city.city} team creates professional real estate media. {city.enLocalAngle}</>
+                : <>Como parte de la red de <a href={mainBrandUrl}>Babula Shots RD</a>, nuestro equipo de {city.city} crea contenido inmobiliario profesional. {city.localAngle}</>}
             </p>
             {targetAudience ? <p>{targetAudience}</p> : null}
             <ul className="chip-list">
@@ -221,7 +268,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
             <p>
               {isEnglish
                 ? `These are starting references for planning a property media budget in ${city.city}. Final pricing depends on area, property size, rooms, travel, urgency and whether the job includes photo, video, drone or reels.`
-                : `Estos son precios base de referencia para planificar contenido inmobiliario en ${city.city}. La cotizacion final depende de zona, tamano de la propiedad, cantidad de espacios, traslado, urgencia y si incluye foto, video, drone o reels.`}
+                : `Estos son precios base de referencia para planificar contenido inmobiliario en ${city.city}. Precios estandarizados para RD con garantia de Babula Shots. La cotizacion final depende de zona, tamano de la propiedad, cantidad de espacios, traslado, urgencia y si incluye foto, video, drone o reels.`}
             </p>
             <div className="pricing-table" role="table" aria-label={isEnglish ? `Real estate media prices in ${city.city}` : `Precios de contenido inmobiliario en ${city.city}`}>
               <div className="pricing-row pricing-head" role="row">
@@ -239,8 +286,44 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
             </div>
             <p className="source-note">
               {isEnglish ? "Pricing reference:" : "Referencia de precios:"}{" "}
-              <a href="https://www.fotografosantodomingo.com/es/prices">{isEnglish ? "published Babula Shots prices" : "precios publicados de Babula Shots"}</a>
+              <a href={pricingSourceUrl}>{isEnglish ? "published Babula Shots prices" : "Precios de sesiones de fotos en RD"}</a>
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap split">
+          <p className="section-tag">{isEnglish ? "Local expert" : "Experto local"}</p>
+          <div>
+            <h2>{isEnglish ? `Local production guide for ${city.city}` : `Guia local de produccion en ${city.city}`}</h2>
+            <div className="authority-grid">
+              <article className="card authority-card">
+                <span>{isEnglish ? "Best local areas" : "Mejores locaciones y zonas"}</span>
+                <p>
+                  {isEnglish
+                    ? `In ${city.city}, the strongest visual story usually comes from areas such as ${city.areas.join(", ")}. These places help explain lifestyle, access, investment value and the type of buyer or guest the property attracts.`
+                    : `En ${city.city}, la historia visual mas fuerte normalmente sale de zonas como ${city.areas.join(", ")}. Estas locaciones ayudan a explicar lifestyle, acceso, valor de inversion y el tipo de comprador o huesped que atrae la propiedad.`}
+                </p>
+                <ul className="service-list">{city.areas.map((area) => <li key={area}>{area}</li>)}</ul>
+              </article>
+              <article className="card authority-card">
+                <span>{isEnglish ? "Logistics and permissions" : "Logistica y permisos"}</span>
+                <p>
+                  {isEnglish
+                    ? `For resorts, gated communities, towers and private villas in ${city.city}, access should be confirmed before the session. Drone work may require owner, administration or community approval depending on the area, privacy rules and flight conditions.`
+                    : `Para resorts, comunidades cerradas, torres y villas privadas en ${city.city}, el acceso debe confirmarse antes de la sesion. El trabajo con drone puede requerir aprobacion de propietario, administracion o comunidad segun la zona, reglas de privacidad y condiciones de vuelo.`}
+                </p>
+              </article>
+              <article className="card authority-card">
+                <span>{isEnglish ? "Climate and light" : "Clima y luz"}</span>
+                <p>
+                  {isEnglish
+                    ? `The safest visual window in ${city.city} is usually early morning or late afternoon, when interiors are easier to balance and exterior light feels warmer. For pools, beach, balconies and views, golden hour can improve perceived value without making the property look fake.`
+                    : `La ventana visual mas segura en ${city.city} suele ser temprano en la manana o al final de la tarde, cuando los interiores se equilibran mejor y la luz exterior se siente mas calida. Para piscinas, playa, balcones y vistas, la hora dorada puede mejorar la percepcion de valor sin hacer que la propiedad parezca falsa.`}
+                </p>
+              </article>
+            </div>
           </div>
         </div>
       </section>
@@ -271,7 +354,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
       </section>
 
       <Integrations locale={locale} />
-      {faq.length ? <FaqBlock items={faq} /> : null}
+      <FaqBlock items={visibleFaq} />
 
       <section className="section alt-section">
         <div className="wrap split">
@@ -288,6 +371,29 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
                 <Link href={servicePath(service, locale)} key={service.slug}>{isEnglish ? service.enH1 : service.h1}</Link>
               ))}
               <a href={mainBrandUrl}>{isEnglish ? `Babula Shots photographer in Dominican Republic` : `Fotografo en Republica Dominicana`}</a>
+              <a href={santoDomingoHubUrl}>{isEnglish ? "Best photographer in Santo Domingo" : "Mejor fotógrafo en Santo Domingo"}</a>
+              <a href={pricingSourceUrl}>{isEnglish ? "Photo session prices in DR" : "Precios de sesiones de fotos en RD"}</a>
+              <a href={bookingUrl}>{isEnglish ? "Book session" : "Reservar sesión"}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap split">
+          <p className="section-tag">{isEnglish ? "National coverage" : "Cobertura nacional"}</p>
+          <div>
+            <h2>{isEnglish ? "Connected to the Babula Shots ecosystem" : "Conectado al ecosistema Babula Shots"}</h2>
+            <p>
+              {isEnglish
+                ? `This real estate page is supported by the wider Babula Shots brand ecosystem. The Santo Domingo photography hub helps reinforce the national brand entity while this subdomain focuses on property media and city-specific real estate searches.`
+                : `Esta pagina inmobiliaria se apoya en el ecosistema de marca de Babula Shots. El hub fotografico de Santo Domingo refuerza la entidad nacional de la marca, mientras este subdominio se enfoca en contenido para propiedades y busquedas inmobiliarias por ciudad.`}
+            </p>
+            <div className="related-links">
+              <a href={mainBrandUrl}>Babula Shots RD</a>
+              <a href={santoDomingoHubUrl}>{isEnglish ? "Best photographer in Santo Domingo" : "Mejor fotógrafo en Santo Domingo"}</a>
+              <a href={pricingSourceUrl}>{isEnglish ? "Photo session prices in DR" : "Precios de sesiones de fotos en RD"}</a>
+              <a href={bookingUrl}>{isEnglish ? "Book session" : "Reservar sesión"}</a>
             </div>
           </div>
         </div>
