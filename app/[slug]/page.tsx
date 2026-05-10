@@ -8,7 +8,7 @@ import { blogPosts, findBlogByRoute } from "@/lib/blogPosts";
 import { cityPath, findCityByRoute, realEstateCities } from "@/lib/realEstateCities";
 import { findIndustryByRoute, industryPath, realEstateIndustries } from "@/lib/realEstateIndustries";
 import { findServiceByRoute, realEstateServices, servicePath } from "@/lib/realEstateServices";
-import { canonicalUrl } from "@/lib/seo";
+import { canonicalUrl, socialCardImage } from "@/lib/seo";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: city.title,
       description: city.description,
-      alternates: { canonical: canonicalUrl(path), languages: { "es-DO": canonicalUrl(path), en: canonicalUrl(cityPath(city, "en")) } },
-      openGraph: { title: city.title, description: city.description, url: canonicalUrl(path) }
+      alternates: { canonical: canonicalUrl(path), languages: { "es-DO": canonicalUrl(path), es: canonicalUrl(path), en: canonicalUrl(cityPath(city, "en")) } },
+      openGraph: { title: city.title, description: city.description, url: canonicalUrl(path), images: [socialCardImage] }
     };
   }
 
@@ -40,7 +40,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: service.title,
       description: service.description,
-      alternates: { canonical: canonicalUrl(path), languages: { "es-DO": canonicalUrl(path), en: canonicalUrl(servicePath(service, "en")) } }
+      alternates: { canonical: canonicalUrl(path), languages: { "es-DO": canonicalUrl(path), es: canonicalUrl(path), en: canonicalUrl(servicePath(service, "en")) } },
+      openGraph: { url: canonicalUrl(path), images: [socialCardImage] }
     };
   }
 
@@ -50,16 +51,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {
       title: industry.title,
       description: industry.description,
-      alternates: { canonical: canonicalUrl(path), languages: { "es-DO": canonicalUrl(path), en: canonicalUrl(industryPath(industry, "en")) } }
+      alternates: { canonical: canonicalUrl(path), languages: { "es-DO": canonicalUrl(path), es: canonicalUrl(path), en: canonicalUrl(industryPath(industry, "en")) } },
+      openGraph: { url: canonicalUrl(path), images: [socialCardImage] }
     };
   }
 
   const post = findBlogByRoute(slug);
   if (post) {
+    const path = `/${post.slug}`;
     return {
       title: post.title,
       description: post.description,
-      alternates: { canonical: canonicalUrl(`/${post.slug}`), languages: { "es-DO": canonicalUrl(`/${post.slug}`), en: canonicalUrl(`/en/${post.enSlug}`) } }
+      alternates: { canonical: canonicalUrl(path), languages: { "es-DO": canonicalUrl(path), es: canonicalUrl(path), en: canonicalUrl(`/en/${post.enSlug}`) } },
+      openGraph: { url: canonicalUrl(path), images: [socialCardImage] }
     };
   }
 

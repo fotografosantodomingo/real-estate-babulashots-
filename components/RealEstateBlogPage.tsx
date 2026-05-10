@@ -49,6 +49,7 @@ export function RealEstateBlogPage({ post, locale = "es" }: { post: BlogPost; lo
     },
     breadcrumbSchema([
       { name: "Babula Shots Inmobiliaria", path: isEnglish ? "/en/" : "/" },
+      { name: isEnglish ? "Blog" : "Blog", path: isEnglish ? "/en/" : "/" },
       { name: title, path }
     ])
   ];

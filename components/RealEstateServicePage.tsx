@@ -118,6 +118,7 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
     },
     breadcrumbSchema([
       { name: "Babula Shots Inmobiliaria", path: isEnglish ? "/en/" : "/" },
+      { name: isEnglish ? "Services" : "Servicios", path: isEnglish ? "/en/" : "/" },
       { name: isEnglish ? service.enH1 : service.h1, path }
     ])
   ];

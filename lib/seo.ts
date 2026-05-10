@@ -34,6 +34,13 @@ export function assetPath(path: string) {
   return path.startsWith("/") ? path : `/${path}`;
 }
 
+export const socialCardImage = {
+  url: "/images/social-card-1200x630.webp",
+  width: 1200,
+  height: 630,
+  alt: "Babula Shots Inmobiliaria"
+} as const;
+
 export function whatsappUrl(message: string) {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
@@ -64,15 +71,15 @@ export const organizationSchema = {
   sameAs: ["https://www.instagram.com/babulashotsrd/"]
 };
 
-export function breadcrumbSchema(items: Array<{ name: string; path: string }>) {
+export function breadcrumbSchema(items: Array<{ name: string; path?: string; item?: string }>) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    itemListElement: items.map((item, index) => ({
+    itemListElement: items.map((entry, index) => ({
       "@type": "ListItem",
       position: index + 1,
-      name: item.name,
-      item: canonicalUrl(item.path)
+      name: entry.name,
+      item: entry.item ?? canonicalUrl(entry.path ?? "/")
     }))
   };
 }

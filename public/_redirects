@@ -39,3 +39,7 @@ https://www.inmobiliaria.babulashotsrd.com/* https://inmobiliaria.babulashotsrd.
 /privacy-policy/ / 301
 /attachment_tag/* /fotografia-inmobiliaria-republica-dominicana/ 301
 /inmobiliaria/* /:splat 301
+/videografo/ / 301
+/galeria/ / 301
+/fotografo-inmobiliaria/ /fotografia-inmobiliaria-republica-dominicana/ 301
+/fotografo-inmobilaria/ /fotografia-inmobiliaria-republica-dominicana/ 301

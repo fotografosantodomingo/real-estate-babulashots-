@@ -81,6 +81,7 @@ export function RealEstateIndustryPage({ industry, locale = "es" }: { industry: 
     },
     breadcrumbSchema([
       { name: "Babula Shots Inmobiliaria", path: isEnglish ? "/en/" : "/" },
+      { name: isEnglish ? "Client types" : "Clientes", path: isEnglish ? "/en/" : "/" },
       { name: title, path }
     ])
   ];

@@ -12,7 +12,7 @@ import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { realEstateIndustries, industryPath } from "@/lib/realEstateIndustries";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { routeMessage } from "@/lib/routeMap";
-import { breadcrumbSchema, canonicalUrl, organizationSchema, phoneE164, siteUrl } from "@/lib/seo";
+import { breadcrumbSchema, canonicalUrl, mainBrandUrl, organizationSchema, phoneE164, siteUrl } from "@/lib/seo";
 
 export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
@@ -45,7 +45,10 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
       url: canonicalUrl(homePath),
       inLanguage: isEnglish ? "en" : "es-DO"
     },
-    breadcrumbSchema([{ name: "Babula Shots Inmobiliaria", path: homePath }])
+    breadcrumbSchema([
+      { name: "Babula Shots", item: mainBrandUrl },
+      { name: isEnglish ? "Real Estate" : "Inmobiliaria", path: homePath }
+    ])
   ];
 
   return (

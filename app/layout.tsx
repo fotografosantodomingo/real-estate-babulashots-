@@ -17,14 +17,28 @@ const routePairsJson = JSON.stringify(
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Fotografia inmobiliaria en Republica Dominicana | Babula Shots",
+    default: "Fotografia Inmobiliaria Profesional RD | Babula Shots",
     template: "%s"
   },
-  description: "Foto, video, drone y contenido inmobiliario para agentes, desarrolladores, Airbnb, villas y propiedades en Republica Dominicana.",
+  description: "Foto, video, drone y contenido inmobiliario para agentes, desarrolladores, Airbnb, villas y propiedades en Republica Dominicana. Cotiza por WhatsApp.",
   openGraph: {
     siteName: "Babula Shots Inmobiliaria",
     locale: "es_DO",
-    type: "website"
+    type: "website",
+    images: [
+      {
+        url: "/images/social-card-1200x630.webp",
+        width: 1200,
+        height: 630,
+        alt: "Babula Shots Inmobiliaria"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fotografia Inmobiliaria Profesional RD | Babula Shots",
+    description: "Foto, video, drone y contenido inmobiliario para agentes, desarrolladores, Airbnb, villas y propiedades en Republica Dominicana. Cotiza por WhatsApp.",
+    images: ["/images/social-card-1200x630.webp"]
   },
   robots: {
     index: true,
