@@ -68,10 +68,6 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
           <p className="eyebrow">Babula Shots · Real Estate Media</p>
           <h1>{isEnglish ? "Real estate photography in Dominican Republic" : "Fotografia inmobiliaria en Republica Dominicana"}</h1>
           <p>{isEnglish ? "Photo, video, drone and listing content for agents, developers, Airbnb hosts, villas and commercial properties." : "Foto, video, drone y contenido para agentes, desarrolladores, Airbnb, villas y propiedades comerciales."}</p>
-          <div className="hero-actions">
-            <a className="button button-light" href="#contacto">{isEnglish ? "Request quote" : "Solicitar cotizacion"}</a>
-            <a className="button button-ghost" href="tel:+18097209547">809 720 95 47</a>
-          </div>
         </div>
       </section>
 
