@@ -1,8 +1,18 @@
 import type { Metadata, Viewport } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { allLanguageRoutePairs } from "@/lib/languageRoutes";
 import { assetPath, siteUrl } from "@/lib/seo";
 import "./globals.css";
+
+const routePairsJson = JSON.stringify(
+  allLanguageRoutePairs().reduce<Record<string, { es: string; en: string }>>((acc, pair) => {
+    acc[pair.es] = pair;
+    acc[pair.en] = pair;
+    return acc;
+  }, {})
+);
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -57,10 +67,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         {children}
         <SiteFooter />
+        <WhatsAppFab />
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var d=document;function s(t){d.documentElement.dataset.theme=t;localStorage.setItem('theme',t);d.querySelectorAll('[data-theme-choice]').forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-theme-choice')===t))})}s(d.documentElement.dataset.theme||'light');d.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-theme-choice]');if(b)s(b.getAttribute('data-theme-choice'))})}catch(e){}"
+              "try{var d=document,r=d.documentElement;function s(t){r.dataset.theme=t;try{localStorage.setItem('theme',t)}catch(e){}}d.addEventListener('click',function(e){var t=e.target,bt=t&&t.closest&&t.closest('[data-theme-toggle]');if(bt){s(r.dataset.theme==='dark'?'light':'dark');return}var dt=t&&t.closest&&t.closest('[data-drawer-toggle]');if(dt){var open=r.classList.toggle('drawer-open');dt.setAttribute('aria-expanded',open?'true':'false');var dr=d.getElementById('site-drawer');if(dr){if(open){dr.removeAttribute('hidden')}else{setTimeout(function(){if(!r.classList.contains('drawer-open'))dr.setAttribute('hidden','')},220)}}return}var dc=t&&t.closest&&t.closest('[data-drawer-close]');if(dc){r.classList.remove('drawer-open');var bt2=d.querySelector('[data-drawer-toggle]');if(bt2)bt2.setAttribute('aria-expanded','false');var dr2=d.getElementById('site-drawer');if(dr2)setTimeout(function(){if(!r.classList.contains('drawer-open'))dr2.setAttribute('hidden','')},220)}});d.addEventListener('keydown',function(e){if(e.key==='Escape'&&r.classList.contains('drawer-open')){r.classList.remove('drawer-open');var bt=d.querySelector('[data-drawer-toggle]');if(bt)bt.setAttribute('aria-expanded','false');var dr=d.getElementById('site-drawer');if(dr)setTimeout(function(){if(!r.classList.contains('drawer-open'))dr.setAttribute('hidden','')},220)}});var p=location.pathname;p=p.endsWith('/')?p:p+'/';var m=" + routePairsJson + ";var pair=m[p];if(pair){d.querySelectorAll('[data-lang-link=\"es\"]').forEach(function(a){a.setAttribute('href',pair.es)});d.querySelectorAll('[data-lang-link=\"en\"]').forEach(function(a){a.setAttribute('href',pair.en)});var es=p===pair.es,en=p===pair.en;d.querySelectorAll('[data-lang-link=\"es\"]').forEach(function(a){if(es)a.setAttribute('aria-current','page')});d.querySelectorAll('[data-lang-link=\"en\"]').forEach(function(a){if(en)a.setAttribute('aria-current','page')})}}catch(e){}"
           }}
         />
       </body>

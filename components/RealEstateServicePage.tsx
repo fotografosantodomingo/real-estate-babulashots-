@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ConversionPanel } from "@/components/ConversionPanel";
+import { HeroImage, mobileVariantOf } from "@/components/HeroImage";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
 import { FaqBlock } from "@/components/FaqBlock";
@@ -10,7 +10,7 @@ import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { industryPath, realEstateIndustries } from "@/lib/realEstateIndustries";
 import { realEstatePackages } from "@/lib/realEstatePackages";
 import { realEstateServices, servicePath, type RealEstateService } from "@/lib/realEstateServices";
-import { assetPath, breadcrumbSchema, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
+import { breadcrumbSchema, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
 
 export function RealEstateServicePage({ service, locale = "es" }: { service: RealEstateService; locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
@@ -126,7 +126,15 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
     <main>
       <SeoJsonLd data={schema} />
       <section className="hero service-hero">
-        <Image src={assetPath("/images/real-estate-media-dominican-republic.webp")} alt={isEnglish ? service.enH1 : service.h1} width={1400} height={788} priority fetchPriority="high" className="hero-image" />
+        <HeroImage
+          src="/images/real-estate-media-dominican-republic.webp"
+          mobileSrc={mobileVariantOf("/images/real-estate-media-dominican-republic.webp")}
+          alt={isEnglish ? service.enH1 : service.h1}
+          width={1400}
+          height={788}
+          mobileWidth={640}
+          mobileHeight={361}
+        />
         <div className="hero-content">
           <p className="eyebrow">Babula Shots · Service</p>
           <h1>{isEnglish ? service.enH1 : service.h1}</h1>

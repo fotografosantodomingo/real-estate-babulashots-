@@ -1,28 +1,106 @@
 import Link from "next/link";
-import { email, phoneDisplay } from "@/lib/seo";
+import { bodaUrl, droneUrl, email, mainBrandUrl, niche, phoneDisplay, santoDomingoHubUrl, siteUrl } from "@/lib/seo";
 import { cityPath, realEstateCities } from "@/lib/realEstateCities";
+
+const networkLinks: Array<{ label: string; href: string; description: string; current?: boolean }> = [
+  { label: "Fotografia de Bodas", href: bodaUrl, description: "Bodas en Punta Cana, Santo Domingo y destinos en Rep. Dominicana" },
+  {
+    label: "Fotografia Inmobiliaria",
+    href: siteUrl,
+    description: "Foto, video y drone para propiedades, agentes y desarrolladores",
+    current: true
+  },
+  { label: "Tomas Aereas con Drone", href: droneUrl, description: "Drone para inmobiliaria, construccion, eventos y bodas" }
+];
+
+const alsoAtLinks: Array<{ label: string; href: string; primary: string; description: string }> = [
+  {
+    label: "babulashotsrd.com",
+    href: mainBrandUrl,
+    primary: "Marca principal",
+    description: "Agencia premium de foto y video en Republica Dominicana. Centro de la red Babula Shots."
+  },
+  {
+    label: "fotografosantodomingo.com",
+    href: santoDomingoHubUrl,
+    primary: "El mismo fotografo - nueva web",
+    description: "Pagina por Babula Shots con todos los servicios disponibles: bodas, retratos, comercial, eventos."
+  }
+];
 
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      <div>
-        <p className="footer-brand">Babula Shots Inmobiliaria</p>
-        <p>Fotografia, video, drone y contenido para propiedades en Republica Dominicana.</p>
+      <div className="footer-top">
+        <div className="footer-brand">
+          <p className="footer-brand-name">Babula Shots</p>
+          <p className="footer-brand-tag">{niche.label} - By Babula Shots</p>
+          <p className="footer-brand-snippet">
+            Foto, video, drone y contenido inmobiliario en Republica Dominicana. Parte de la red Babula Shots: bodas,
+            inmobiliaria, drone y la marca principal en Santo Domingo.
+          </p>
+        </div>
+        <div className="footer-network" aria-label="Red Babula Shots">
+          <p className="footer-section-title">Red Babula Shots</p>
+          <ul>
+            {networkLinks.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  aria-current={link.current ? "page" : undefined}
+                  rel="noopener"
+                  className={link.current ? "is-current" : ""}
+                >
+                  <span className="net-label">{link.label}</span>
+                  <span className="net-desc">{link.description}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="footer-contact">
+          <p className="footer-section-title">Contacto</p>
+          <p>
+            <a href={`tel:${phoneDisplay.replace(/\s/g, "")}`}>{phoneDisplay}</a>
+          </p>
+          <p>
+            <a href={`mailto:${email}`}>{email}</a>
+          </p>
+        </div>
       </div>
-      <div className="footer-links">
-        <Link href="/foto-video-inmobiliario">Foto y video</Link>
-        <Link href="/fotografia-drone-inmobiliaria">Drone</Link>
-        <Link href="/fotografia-para-airbnb-villas">Airbnb y villas</Link>
-        <a href={`tel:${phoneDisplay.replace(/\s/g, "")}`}>{phoneDisplay}</a>
-        <a href={`mailto:${email}`}>{email}</a>
+      <div className="footer-also" aria-label="Tambien en">
+        <p className="footer-section-title">
+          <span aria-hidden="true">{"\u{1F310}"}</span> Tambien en
+        </p>
+        <ul>
+          {alsoAtLinks.map((link) => (
+            <li key={link.href}>
+              <a href={link.href} rel="noopener">
+                <span className="also-label">
+                  {link.label}
+                  <span aria-hidden="true" className="also-arrow">
+                    {"→"}
+                  </span>
+                </span>
+                <span className="also-primary">{link.primary}</span>
+                <span className="also-desc">{link.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="footer-areas" aria-label="Areas que servimos">
-        <p>Areas que servimos</p>
+        <p className="footer-section-title">Areas que servimos</p>
         <div>
           {realEstateCities.map((city) => (
-            <Link href={cityPath(city)} key={city.slug}>{city.city}</Link>
+            <Link href={cityPath(city)} key={city.slug}>
+              {city.city}
+            </Link>
           ))}
         </div>
+      </div>
+      <div className="footer-bottom">
+        <p>(c) {new Date().getFullYear()} Babula Shots. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

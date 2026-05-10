@@ -1,7 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ClientLogos } from "@/components/ClientLogos";
 import { ConversionPanel } from "@/components/ConversionPanel";
+import { CrossSiteCta } from "@/components/CrossSiteCta";
+import { HeroImage, mobileVariantOf } from "@/components/HeroImage";
 import { Integrations } from "@/components/Integrations";
 import { ProofStrip } from "@/components/ProofStrip";
 import { PropertyGallery } from "@/components/PropertyGallery";
@@ -11,7 +12,7 @@ import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { realEstateIndustries, industryPath } from "@/lib/realEstateIndustries";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { routeMessage } from "@/lib/routeMap";
-import { assetPath, breadcrumbSchema, canonicalUrl, organizationSchema, phoneE164, siteUrl } from "@/lib/seo";
+import { breadcrumbSchema, canonicalUrl, organizationSchema, phoneE164, siteUrl } from "@/lib/seo";
 
 export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
@@ -51,7 +52,15 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
     <main>
       <SeoJsonLd data={schema} />
       <section className="hero">
-        <Image src={assetPath("/images/real-estate-media-dominican-republic.webp")} alt={isEnglish ? "Real estate photography and video in Dominican Republic" : "Fotografia y video inmobiliario en Republica Dominicana"} width={1400} height={788} priority fetchPriority="high" className="hero-image" />
+        <HeroImage
+          src="/images/real-estate-media-dominican-republic.webp"
+          mobileSrc={mobileVariantOf("/images/real-estate-media-dominican-republic.webp")}
+          alt={isEnglish ? "Real estate photography and video in Dominican Republic" : "Fotografia y video inmobiliario en Republica Dominicana"}
+          width={1400}
+          height={788}
+          mobileWidth={640}
+          mobileHeight={361}
+        />
         <div className="hero-content">
           <p className="eyebrow">Babula Shots · Real Estate Media</p>
           <h1>{isEnglish ? "Real estate photography in Dominican Republic" : "Fotografia inmobiliaria en Republica Dominicana"}</h1>
@@ -123,6 +132,7 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
       </section>
 
       <Integrations locale={locale} />
+      <CrossSiteCta locale={locale} />
       <ConversionPanel
         locale={locale}
         title={isEnglish ? "Quote photo, video or drone for your property" : "Cotiza foto, video o drone para tu propiedad"}

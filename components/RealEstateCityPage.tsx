@@ -1,11 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ConversionPanel } from "@/components/ConversionPanel";
 import { FaqBlock } from "@/components/FaqBlock";
+import { HeroImage, mobileVariantOf } from "@/components/HeroImage";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
-import { assetPath, bookingUrl, breadcrumbSchema, cityAreaServed, canonicalUrl, mainBrandUrl, phoneE164, pricingSourceUrl, santoDomingoHubUrl, siteUrl } from "@/lib/seo";
+import { bookingUrl, breadcrumbSchema, cityAreaServed, canonicalUrl, mainBrandUrl, phoneE164, pricingSourceUrl, santoDomingoHubUrl, siteUrl } from "@/lib/seo";
 import { cityPath, realEstateCities, type RealEstateCity } from "@/lib/realEstateCities";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { realEstatePackages } from "@/lib/realEstatePackages";
@@ -163,7 +163,15 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
     <main>
       <SeoJsonLd data={schema} />
       <section className="hero service-hero">
-        <Image src={assetPath(city.image)} alt={title} width={1672} height={941} priority fetchPriority="high" className="hero-image" />
+        <HeroImage
+          src={city.image}
+          mobileSrc={mobileVariantOf(city.image)}
+          alt={title}
+          width={1672}
+          height={941}
+          mobileWidth={720}
+          mobileHeight={405}
+        />
         <div className="hero-content">
           <nav className="breadcrumbs" aria-label={isEnglish ? "Breadcrumbs" : "Migas de pan"}>
             <Link href={isEnglish ? "/en/" : "/"}>Home</Link>
