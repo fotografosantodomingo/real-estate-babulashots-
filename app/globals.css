@@ -1185,6 +1185,22 @@ summary {
 
   .pricing-row {
     grid-template-columns: 1fr;
+    gap: .35rem;
+  }
+
+  .pricing-head {
+    display: none;
+  }
+
+  .pricing-row span:first-child {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .pricing-row span:last-child {
+    color: var(--accent);
+    font-size: 1.05rem;
   }
 
   .hero {
