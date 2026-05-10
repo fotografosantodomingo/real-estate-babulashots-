@@ -13,9 +13,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const paths = [
     "/",
     "/en/",
-    "/servicios/", "/en/servicios/",
-    "/ubicaciones/", "/en/ubicaciones/",
-    "/precios/", "/en/precios/",
+    "/servicios/", "/en/services/",
+    "/ubicaciones/", "/en/locations/",
+    "/precios/", "/en/prices/",
     "/faq/", "/en/faq/",
     ...realEstateCities.flatMap((city) => [cityPath(city), cityPath(city, "en")]),
     ...realEstateServices.flatMap((service) => [servicePath(service), servicePath(service, "en")]),
