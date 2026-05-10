@@ -16,6 +16,10 @@ const normalizePath = (pathname: string) => {
 
 const routePairs: LanguagePaths[] = [
   { es: "/", en: "/en/" },
+  { es: "/servicios/", en: "/en/servicios/" },
+  { es: "/ubicaciones/", en: "/en/ubicaciones/" },
+  { es: "/precios/", en: "/en/precios/" },
+  { es: "/faq/", en: "/en/faq/" },
   ...realEstateCities.map((city) => ({ es: cityPath(city), en: cityPath(city, "en") })),
   ...realEstateServices.map((service) => ({ es: servicePath(service), en: servicePath(service, "en") })),
   ...realEstateIndustries.map((industry) => ({ es: industryPath(industry), en: industryPath(industry, "en") })),
