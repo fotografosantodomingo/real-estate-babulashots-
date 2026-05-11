@@ -1,3 +1,4 @@
+import { articlesWithEn } from "@/lib/articles";
 import { blogPosts } from "@/lib/blogPosts";
 import { cityPath, realEstateCities } from "@/lib/realEstateCities";
 import { industryPath, realEstateIndustries } from "@/lib/realEstateIndustries";
@@ -20,10 +21,12 @@ const routePairs: LanguagePaths[] = [
   { es: "/ubicaciones/", en: "/en/locations/" },
   { es: "/precios/", en: "/en/prices/" },
   { es: "/faq/", en: "/en/faq/" },
+  { es: "/blog/", en: "/en/blog/" },
   ...realEstateCities.map((city) => ({ es: cityPath(city), en: cityPath(city, "en") })),
   ...realEstateServices.map((service) => ({ es: servicePath(service), en: servicePath(service, "en") })),
   ...realEstateIndustries.map((industry) => ({ es: industryPath(industry), en: industryPath(industry, "en") })),
-  ...blogPosts.map((post) => ({ es: `/${post.slug}`, en: `/en/${post.enSlug}` }))
+  ...blogPosts.map((post) => ({ es: `/${post.slug}`, en: `/en/${post.enSlug}` })),
+  ...articlesWithEn.map((a) => ({ es: `/blog/${a.slug}/`, en: `/en/blog/${a.en!.enSlug}/` }))
 ].map((pair) => ({ es: normalizePath(pair.es), en: normalizePath(pair.en) }));
 
 export function languagePathsFor(pathname: string): LanguagePaths {
