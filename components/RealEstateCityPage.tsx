@@ -35,6 +35,11 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
   const marketNotes = (isEnglish ? city.enMarketNotes : city.marketNotes) ?? [];
   const localSeoSections = (isEnglish ? city.enLocalSeoSections : city.localSeoSections) ?? [];
   const targetAudience = isEnglish ? city.enTargetAudience : city.targetAudience;
+  const localContext = (isEnglish ? city.enLocalContext : city.localContext) ?? [];
+  const sisterCitySlugs = city.sisterCities ?? [];
+  const sisterCityList = sisterCitySlugs
+    .map((slug) => realEstateCities.find((item) => item.slug === slug))
+    .filter((item): item is RealEstateCity => Boolean(item));
   const packageRows = realEstatePackages.filter((item) => item.priceValueDop);
   const transactionalFaq = [
     {
@@ -224,6 +229,19 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
       </section>
 
       <PropertyGallery locale={locale} city={city.city} areas={city.areas} />
+      {localContext.length ? (
+        <section className="section">
+          <div className="wrap split">
+            <p className="section-tag">{isEnglish ? "Distinctive market context" : "Contexto de mercado distintivo"}</p>
+            <div>
+              <h2>{isEnglish ? `What makes ${city.city} different for real estate photography` : `Que hace diferente a ${city.city} para la fotografia inmobiliaria`}</h2>
+              {localContext.map((paragraph, index) => (
+                <p key={`local-context-${index}`}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
       {marketNotes.length ? (
         <section className="section alt-section">
           <div className="wrap split">
@@ -454,6 +472,35 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
               <div className="related-links">
                 {realEstateCities.filter((item) => city.nearby.includes(item.city)).map((item) => (
                   <Link key={item.slug} href={cityPath(item, locale)}>{isEnglish ? item.enH1 : item.h1}</Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {sisterCityList.length ? (
+        <section className="section alt-section">
+          <div className="wrap split">
+            <p className="section-tag">{isEnglish ? "Sister markets" : "Mercados hermanos"}</p>
+            <div>
+              <h2>{isEnglish ? `Real estate photography in markets connected to ${city.city}` : `Fotografia inmobiliaria en mercados conectados a ${city.city}`}</h2>
+              <p>
+                {isEnglish
+                  ? `These cities share buyer profile, geography or property type with ${city.city}. Many owners, agents and investors evaluate them together, so we keep media decisions consistent across the cluster.`
+                  : `Estas ciudades comparten perfil de comprador, geografia o tipo de propiedad con ${city.city}. Muchos propietarios, agentes e inversionistas las evaluan en conjunto, por eso mantenemos decisiones de contenido consistentes entre todas.`}
+              </p>
+              <div className="authority-grid">
+                {sisterCityList.map((sister) => (
+                  <article className="card authority-card" key={`sister-${sister.slug}`}>
+                    <span>{sister.city}</span>
+                    <p>{isEnglish ? sister.enIntro : sister.intro}</p>
+                    <Link href={cityPath(sister, locale)}>
+                      {isEnglish
+                        ? `Real estate photography in ${sister.city}`
+                        : `Fotografia inmobiliaria en ${sister.city}`}
+                    </Link>
+                  </article>
                 ))}
               </div>
             </div>
