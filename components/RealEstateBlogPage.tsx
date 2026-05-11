@@ -7,7 +7,21 @@ import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { realEstatePackages } from "@/lib/realEstatePackages";
 import { routeMessage } from "@/lib/routeMap";
-import { breadcrumbSchema, canonicalUrl } from "@/lib/seo";
+import {
+  aggregateRating,
+  brandLogoUrl,
+  breadcrumbSchema,
+  canonicalUrl,
+  email,
+  geoCoordinates,
+  isoAst,
+  localBusinessAreaServed,
+  localBusinessPriceRange,
+  organizationSchema,
+  phoneE164,
+  postalAddress,
+  siteUrl
+} from "@/lib/seo";
 
 export function RealEstateBlogPage({ post, locale = "es" }: { post: BlogPost; locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
@@ -26,17 +40,46 @@ export function RealEstateBlogPage({ post, locale = "es" }: { post: BlogPost; lo
       answer: isEnglish ? "Yes. Deliverables can be prepared for MLS-style listings, Point2Homes, Airbnb, websites, WhatsApp and social media." : "Si. Los entregables pueden prepararse para MLS-style listings, Point2Homes, Airbnb, websites, WhatsApp y redes sociales."
     }
   ];
+  // Brand entity — LocalBusiness (NOT Photographer) so Review Snippet validator
+  // accepts the aggregateRating. See memory/schema_standards.md rule 2c.
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}#localbusiness`,
+    name: "Babula Shots Inmobiliaria",
+    url: siteUrl,
+    image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
+    telephone: phoneE164,
+    email,
+    priceRange: localBusinessPriceRange,
+    address: postalAddress,
+    geo: geoCoordinates,
+    areaServed: localBusinessAreaServed,
+    aggregateRating,
+    sameAs: ["https://www.instagram.com/babulashotsrd/"]
+  };
   const schema = [
+    organizationSchema,
+    localBusinessSchema,
     {
       "@context": "https://schema.org",
       "@type": "Article",
       headline: title,
       description: isEnglish ? post.enDescription : post.description,
       mainEntityOfPage: canonicalUrl(path),
-      datePublished: "2026-05-06",
-      dateModified: "2026-05-06",
-      author: { "@type": "Organization", name: "Babula Shots" },
-      publisher: { "@type": "Organization", name: "Babula Shots" }
+      datePublished: isoAst("2026-05-06"),
+      dateModified: isoAst("2026-05-06"),
+      author: {
+        "@type": "Organization",
+        name: "Babula Shots",
+        "@id": `${siteUrl}#organization`
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "Babula Shots",
+        logo: { "@type": "ImageObject", url: brandLogoUrl }
+      },
+      inLanguage: isEnglish ? "en" : "es-DO"
     },
     {
       "@context": "https://schema.org",

@@ -5,7 +5,24 @@ import { HeroImage, mobileVariantOf } from "@/components/HeroImage";
 import { Integrations } from "@/components/Integrations";
 import { PropertyGallery } from "@/components/PropertyGallery";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
-import { bookingUrl, breadcrumbSchema, cityAreaServed, canonicalUrl, mainBrandUrl, phoneE164, pricingSourceUrl, santoDomingoHubUrl, siteUrl } from "@/lib/seo";
+import {
+  aggregateRating,
+  bookingUrl,
+  breadcrumbSchema,
+  canonicalUrl,
+  cityAreaServed,
+  email,
+  geoCoordinates,
+  localBusinessAreaServed,
+  localBusinessPriceRange,
+  mainBrandUrl,
+  organizationSchema,
+  phoneE164,
+  postalAddress,
+  pricingSourceUrl,
+  santoDomingoHubUrl,
+  siteUrl
+} from "@/lib/seo";
 import { cityPath, realEstateCities, type RealEstateCity } from "@/lib/realEstateCities";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { realEstatePackages } from "@/lib/realEstatePackages";
@@ -46,7 +63,40 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
     realEstateServices.find((service) => service.slug === "fotografia-para-airbnb-villas"),
     realEstateServices.find((service) => service.slug === "precios-fotografia-inmobiliaria-republica-dominicana")
   ].filter((service): service is (typeof realEstateServices)[number] => Boolean(service));
+  // Brand entity — LocalBusiness (NOT Photographer) so Review Snippet validator
+  // accepts the aggregateRating. See memory/schema_standards.md rule 2c.
+  // Brand-hierarchy is conveyed by sameAs (no parentOrganization, per rule 2b).
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}#localbusiness`,
+    name: "Babula Shots Inmobiliaria",
+    url: siteUrl,
+    image: `${siteUrl}${city.image}`,
+    telephone: phoneE164,
+    email,
+    priceRange: localBusinessPriceRange,
+    address: postalAddress,
+    geo: geoCoordinates,
+    knowsAbout: [
+      "Fotografia inmobiliaria",
+      "Video inmobiliario",
+      "Drone inmobiliario",
+      "Fotografia de bodas",
+      "Retratos",
+      "Eventos"
+    ],
+    areaServed: [
+      ...localBusinessAreaServed,
+      cityAreaServed(city.city, city.province),
+      ...city.areas.map((area) => ({ "@type": "Place", name: area }))
+    ],
+    aggregateRating,
+    sameAs: [mainBrandUrl, "https://www.instagram.com/babulashotsrd/"]
+  };
   const schema = [
+    organizationSchema,
+    localBusinessSchema,
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -59,15 +109,10 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
     {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
-      name: "Babula Shots Inmobiliaria",
+      name: `Babula Shots Inmobiliaria - ${city.city}`,
       url: canonicalUrl(path),
       telephone: phoneE164,
       image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
-      parentOrganization: {
-        "@type": "Organization",
-        name: "Babula Shots RD",
-        url: mainBrandUrl
-      },
       knowsAbout: [
         "Fotografia inmobiliaria",
         "Video inmobiliario",
@@ -78,7 +123,7 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
         "Eventos"
       ],
       areaServed: cityAreaServed(city.city, city.province),
-      priceRange: "$$",
+      priceRange: localBusinessPriceRange,
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: isEnglish ? `Real estate media prices in ${city.city}` : `Precios de contenido inmobiliario en ${city.city}`,
@@ -94,42 +139,14 @@ export function RealEstateCityPage({ city, locale = "es" }: { city: RealEstateCi
     },
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      name: `${title} - Babula Shots`,
-      url: canonicalUrl(path),
-      telephone: phoneE164,
-      image: `${siteUrl}${city.image}`,
-      parentOrganization: {
-        "@type": "Organization",
-        name: "Babula Shots RD",
-        url: mainBrandUrl
-      },
-      knowsAbout: [
-        "Fotografia inmobiliaria",
-        "Video inmobiliario",
-        "Drone inmobiliario",
-        "Fotografia de bodas",
-        "Retratos",
-        "Eventos"
-      ],
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: city.city,
-        addressRegion: city.province,
-        addressCountry: "DO"
-      },
-      areaServed: [
-        cityAreaServed(city.city, city.province),
-        ...city.areas.map((area) => ({ "@type": "Place", name: area }))
-      ],
-      priceRange: "$$"
-    },
-    {
-      "@context": "https://schema.org",
       "@type": "Service",
       name: title,
       serviceType: "Real estate photography",
-      provider: { "@type": "ProfessionalService", name: "Babula Shots Inmobiliaria", telephone: phoneE164 },
+      provider: {
+        "@type": "Organization",
+        name: "Babula Shots Inmobiliaria",
+        "@id": `${siteUrl}#organization`
+      },
       areaServed: cityAreaServed(city.city, city.province),
       hasOfferCatalog: {
         "@type": "OfferCatalog",

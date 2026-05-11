@@ -8,7 +8,20 @@ import {
   servicesByNiche,
   type Niche
 } from "@/lib/networkCatalog";
-import { canonicalUrl, organizationSchema, phoneE164, phoneDisplay, whatsappUrl, siteUrl } from "@/lib/seo";
+import {
+  aggregateRating,
+  canonicalUrl,
+  email,
+  geoCoordinates,
+  localBusinessAreaServed,
+  localBusinessPriceRange,
+  organizationSchema,
+  phoneDisplay,
+  phoneE164,
+  postalAddress,
+  siteUrl,
+  whatsappUrl
+} from "@/lib/seo";
 
 type Locale = "es" | "en";
 type PageType = "servicios" | "ubicaciones" | "precios" | "faq";
@@ -58,7 +71,26 @@ export function NetworkPage({ niche, type, locale }: { niche: Niche; type: PageT
     ]
   };
 
-  const schemas: unknown[] = [organizationSchema, breadcrumb];
+  // Brand entity — LocalBusiness (NOT Photographer) so Review Snippet validator
+  // accepts the aggregateRating. See memory/schema_standards.md rule 2c.
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}#localbusiness`,
+    name: "Babula Shots Inmobiliaria",
+    url: siteUrl,
+    image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
+    telephone: phoneE164,
+    email,
+    priceRange: localBusinessPriceRange,
+    address: postalAddress,
+    geo: geoCoordinates,
+    areaServed: localBusinessAreaServed,
+    aggregateRating,
+    sameAs: ["https://www.instagram.com/babulashotsrd/"]
+  };
+
+  const schemas: unknown[] = [organizationSchema, localBusinessSchema, breadcrumb];
 
   if (type === "faq") {
     schemas.push({
@@ -79,9 +111,13 @@ export function NetworkPage({ niche, type, locale }: { niche: Niche; type: PageT
         "@type": "Service",
         name: isEn ? s.enName : s.esName,
         description: isEn ? s.enDescription : s.esDescription,
-        provider: { "@type": "ProfessionalService", name: "Babula Shots", telephone: phoneE164, url: siteUrl },
+        provider: {
+          "@type": "Organization",
+          name: "Babula Shots",
+          "@id": `${siteUrl}#organization`
+        },
         url: s.url,
-        areaServed: { "@type": "Country", name: "Dominican Republic" }
+        areaServed: localBusinessAreaServed
       });
     });
   }
@@ -108,7 +144,11 @@ export function NetworkPage({ niche, type, locale }: { niche: Niche; type: PageT
         priceCurrency: "DOP",
         ...(p.priceDop ? { price: p.priceDop } : {}),
         availability: "https://schema.org/InStock",
-        seller: { "@type": "ProfessionalService", name: "Babula Shots", url: siteUrl }
+        seller: {
+          "@type": "Organization",
+          name: "Babula Shots",
+          "@id": `${siteUrl}#organization`
+        }
       });
     });
   }

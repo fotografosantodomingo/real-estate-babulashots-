@@ -12,13 +12,45 @@ import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { realEstateIndustries, industryPath } from "@/lib/realEstateIndustries";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { routeMessage } from "@/lib/routeMap";
-import { breadcrumbSchema, canonicalUrl, mainBrandUrl, organizationSchema, phoneE164, siteUrl } from "@/lib/seo";
+import {
+  aggregateRating,
+  breadcrumbSchema,
+  canonicalUrl,
+  email,
+  geoCoordinates,
+  localBusinessAreaServed,
+  localBusinessPriceRange,
+  mainBrandUrl,
+  organizationSchema,
+  phoneE164,
+  postalAddress,
+  siteUrl
+} from "@/lib/seo";
 
 export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
   const homePath = isEnglish ? "/en/" : "/";
+  // Brand entity — LocalBusiness (NOT Photographer) so Review Snippet validator
+  // accepts the aggregateRating. See memory/schema_standards.md rule 2c.
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}#localbusiness`,
+    name: "Babula Shots Inmobiliaria",
+    url: siteUrl,
+    image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
+    telephone: phoneE164,
+    email,
+    priceRange: localBusinessPriceRange,
+    address: postalAddress,
+    geo: geoCoordinates,
+    areaServed: localBusinessAreaServed,
+    aggregateRating,
+    sameAs: ["https://www.instagram.com/babulashotsrd/"]
+  };
   const schema = [
     organizationSchema,
+    localBusinessSchema,
     {
       "@context": "https://schema.org",
       "@type": "ProfessionalService",
@@ -27,8 +59,8 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
       url: canonicalUrl(homePath),
       telephone: phoneE164,
       image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
-      areaServed: { "@type": "Country", name: "Dominican Republic" },
-      priceRange: "$$",
+      areaServed: localBusinessAreaServed,
+      priceRange: localBusinessPriceRange,
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Real Estate Media Services",

@@ -10,7 +10,20 @@ import { realEstateCities, cityPath } from "@/lib/realEstateCities";
 import { industryPath, realEstateIndustries } from "@/lib/realEstateIndustries";
 import { realEstatePackages } from "@/lib/realEstatePackages";
 import { realEstateServices, servicePath, type RealEstateService } from "@/lib/realEstateServices";
-import { breadcrumbSchema, canonicalUrl, phoneE164, siteUrl, withBasePath } from "@/lib/seo";
+import {
+  aggregateRating,
+  breadcrumbSchema,
+  canonicalUrl,
+  email,
+  geoCoordinates,
+  localBusinessAreaServed,
+  localBusinessPriceRange,
+  organizationSchema,
+  phoneE164,
+  postalAddress,
+  siteUrl,
+  withBasePath
+} from "@/lib/seo";
 
 export function RealEstateServicePage({ service, locale = "es" }: { service: RealEstateService; locale?: "es" | "en" }) {
   const isEnglish = locale === "en";
@@ -77,7 +90,27 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
     }
   ];
   const faq = customFaq.length ? customFaq : defaultFaq;
+  // Brand entity — LocalBusiness (NOT Photographer) so Review Snippet validator
+  // accepts the aggregateRating. See memory/schema_standards.md rule 2c.
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}#localbusiness`,
+    name: "Babula Shots Inmobiliaria",
+    url: siteUrl,
+    image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
+    telephone: phoneE164,
+    email,
+    priceRange: localBusinessPriceRange,
+    address: postalAddress,
+    geo: geoCoordinates,
+    areaServed: localBusinessAreaServed,
+    aggregateRating,
+    sameAs: ["https://www.instagram.com/babulashotsrd/"]
+  };
   const schema = [
+    organizationSchema,
+    localBusinessSchema,
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -92,8 +125,12 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
       name: isEnglish ? service.enH1 : service.h1,
       serviceType: "Real estate media",
       url: canonicalUrl(path),
-      provider: { "@type": "ProfessionalService", name: "Babula Shots Inmobiliaria", telephone: phoneE164, url: siteUrl },
-      areaServed: { "@type": "Country", name: "Dominican Republic" },
+      provider: {
+        "@type": "Organization",
+        name: "Babula Shots Inmobiliaria",
+        "@id": `${siteUrl}#organization`
+      },
+      areaServed: localBusinessAreaServed,
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: isEnglish ? "Real estate media starting prices" : "Precios base de contenido inmobiliario",

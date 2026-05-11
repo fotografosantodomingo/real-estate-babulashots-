@@ -7,7 +7,19 @@ import { ServicePackages } from "@/components/ServicePackages";
 import { SeoJsonLd } from "@/components/SeoJsonLd";
 import { realEstateServices, servicePath } from "@/lib/realEstateServices";
 import { realEstatePackages } from "@/lib/realEstatePackages";
-import { breadcrumbSchema, canonicalUrl, phoneE164 } from "@/lib/seo";
+import {
+  aggregateRating,
+  breadcrumbSchema,
+  canonicalUrl,
+  email,
+  geoCoordinates,
+  localBusinessAreaServed,
+  localBusinessPriceRange,
+  organizationSchema,
+  phoneE164,
+  postalAddress,
+  siteUrl
+} from "@/lib/seo";
 import { industryPath, type RealEstateIndustry } from "@/lib/realEstateIndustries";
 
 export function RealEstateIndustryPage({ industry, locale = "es" }: { industry: RealEstateIndustry; locale?: "es" | "en" }) {
@@ -43,7 +55,27 @@ export function RealEstateIndustryPage({ industry, locale = "es" }: { industry: 
       answer: isEnglish ? "Yes. Files can be prepared for MLS-style listings, Point2Homes, Airbnb, websites, WhatsApp, reels and sales campaigns." : "Si. Los archivos pueden prepararse para MLS-style listings, Point2Homes, Airbnb, websites, WhatsApp, reels y campanas comerciales."
     }
   ];
+  // Brand entity — LocalBusiness (NOT Photographer) so Review Snippet validator
+  // accepts the aggregateRating. See memory/schema_standards.md rule 2c.
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": `${siteUrl}#localbusiness`,
+    name: "Babula Shots Inmobiliaria",
+    url: siteUrl,
+    image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
+    telephone: phoneE164,
+    email,
+    priceRange: localBusinessPriceRange,
+    address: postalAddress,
+    geo: geoCoordinates,
+    areaServed: localBusinessAreaServed,
+    aggregateRating,
+    sameAs: ["https://www.instagram.com/babulashotsrd/"]
+  };
   const schema = [
+    organizationSchema,
+    localBusinessSchema,
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
@@ -56,8 +88,12 @@ export function RealEstateIndustryPage({ industry, locale = "es" }: { industry: 
       "@type": "Service",
       name: title,
       url: canonicalUrl(path),
-      provider: { "@type": "ProfessionalService", name: "Babula Shots Inmobiliaria", telephone: phoneE164 },
-      areaServed: { "@type": "Country", name: "Dominican Republic" },
+      provider: {
+        "@type": "Organization",
+        name: "Babula Shots Inmobiliaria",
+        "@id": `${siteUrl}#organization`
+      },
+      areaServed: localBusinessAreaServed,
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: isEnglish ? "Real estate media package guidance" : "Guia de paquetes de contenido inmobiliario",
