@@ -34,6 +34,11 @@ export type RealEstateCity = {
   whatsappMessage: string;
 };
 
+// Placeholder hero pool. Currently shared across 13 cities (5 images → 13 cities).
+// WHEN A REAL PHOTO ARRIVES FOR ONE CITY: set that city's `image:` field to a
+// direct path like "/images/inmo-{slug}-hero.webp" — DO NOT edit the consts
+// below, since each is reused by multiple cities and editing one would change
+// the placeholder on every city that still relies on it.
 const generatedHero = "/images/real-estate-media-dominican-republic.webp";
 const interior = "/images/legacy-real-estate/santo-domingo-property-interior.webp";
 const villa = "/images/legacy-real-estate/real-estate-photography-rd.webp";
