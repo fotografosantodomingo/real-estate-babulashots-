@@ -138,7 +138,8 @@ export const organizationSchema = {
     inmobiliariaUrl,
     droneUrl,
     santoDomingoHubUrl,
-    "https://www.instagram.com/babulashotsrd/"
+    "https://www.instagram.com/babulashotsrd/",
+    "https://www.wikidata.org/wiki/Q139892828"
   ]
 };
 
