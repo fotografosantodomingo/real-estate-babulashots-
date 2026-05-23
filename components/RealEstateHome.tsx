@@ -61,13 +61,67 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
       image: `${siteUrl}/images/real-estate-media-dominican-republic.webp`,
       areaServed: localBusinessAreaServed,
       priceRange: localBusinessPriceRange,
+      // Concrete priced Offers from the shared raw-pricing.json catalogue
+      // (~/Documents/.shared-content/raw-pricing.json real_estate_drone_packages
+      // + the general Bienes Raíces tier). Per schema_standards.md rule 5,
+      // concrete numeric DOP prices unlock numeric priceRange + Service Listings.
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Real Estate Media Services",
-        itemListElement: realEstateServices.slice(0, 4).map((service) => ({
-          "@type": "Offer",
-          itemOffered: { "@type": "Service", name: isEnglish ? service.enH1 : service.h1 }
-        }))
+        name: isEnglish ? "Real estate media packages" : "Paquetes de fotografía inmobiliaria",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            "@id": `${siteUrl}/#offer-bienes-raices`,
+            name: isEnglish ? "Real Estate — Standard listing" : "Bienes Raíces — listado estándar",
+            description: isEnglish
+              ? "Interior and exterior. Up to 3 properties. Optional drone."
+              : "Interior y exterior. Hasta 3 propiedades. Opción con drone disponible.",
+            price: "8940",
+            priceCurrency: "DOP",
+            availability: "https://schema.org/InStock",
+            url: canonicalUrl(homePath),
+            category: "Real estate photography"
+          },
+          {
+            "@type": "Offer",
+            "@id": `${siteUrl}/#offer-listado-esencial`,
+            name: isEnglish ? "Listado Esencial — best value" : "Listado Esencial — mejor valor",
+            description: isEnglish
+              ? "Up to 90 min on site. Up to 200m². 20 high-resolution edited photos. Interior + exterior coverage."
+              : "Hasta 90 min en sitio. Hasta 200m². 20 fotos editadas en alta resolución. Cobertura interior + exterior.",
+            price: "11900",
+            priceCurrency: "DOP",
+            availability: "https://schema.org/InStock",
+            url: canonicalUrl(homePath),
+            category: "Real estate photography"
+          },
+          {
+            "@type": "Offer",
+            "@id": `${siteUrl}/#offer-propiedad-premium`,
+            name: isEnglish ? "Propiedad Premium — most booked" : "Propiedad Premium — más reservado",
+            description: isEnglish
+              ? "Up to 3h on site. Up to 500m². 35 high-resolution edited photos. Aerial drone photos."
+              : "Hasta 3h en sitio. Hasta 500m². 35 fotos editadas en alta resolución. Fotos aéreas con drone.",
+            price: "23800",
+            priceCurrency: "DOP",
+            availability: "https://schema.org/InStock",
+            url: canonicalUrl(homePath),
+            category: "Real estate photography + drone"
+          },
+          {
+            "@type": "Offer",
+            "@id": `${siteUrl}/#offer-finca-de-lujo`,
+            name: isEnglish ? "Finca de Lujo — luxury estate" : "Finca de Lujo",
+            description: isEnglish
+              ? "Up to 4h on site. Unlimited property size. 50+ high-resolution edited photos. 4K aerial drone video. Matterport tour."
+              : "Hasta 4h en sitio. Tamaño de propiedad ilimitado. 50+ fotos editadas en alta resolución. Video aéreo 4K con drone. Tour Matterport.",
+            price: "35800",
+            priceCurrency: "DOP",
+            availability: "https://schema.org/InStock",
+            url: canonicalUrl(homePath),
+            category: "Real estate photography + drone + Matterport"
+          }
+        ]
       }
     },
     {
