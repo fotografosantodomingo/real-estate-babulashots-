@@ -126,6 +126,15 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
     },
     {
       "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: `${siteUrl}/`,
+      name: "Babula Shots Inmobiliaria",
+      inLanguage: isEnglish ? "en" : "es-DO",
+      publisher: { "@id": `${siteUrl}/#organization` }
+    },
+    {
+      "@context": "https://schema.org",
       "@type": "WebPage",
       name: isEnglish ? "Real estate photography in Dominican Republic" : "Fotografia inmobiliaria en Republica Dominicana",
       url: canonicalUrl(homePath),
