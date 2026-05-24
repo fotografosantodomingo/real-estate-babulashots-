@@ -1,9 +1,6 @@
 import type { MetadataRoute } from "next";
-import { articles, articlesWithEn } from "@/lib/articles";
-import { blogPosts } from "@/lib/blogPosts";
-import { cityPath, realEstateCities } from "@/lib/realEstateCities";
-import { industryPath, realEstateIndustries } from "@/lib/realEstateIndustries";
-import { realEstateServices, servicePath } from "@/lib/realEstateServices";
+import { articles } from "@/lib/articles";
+import { allLanguageRoutePairs } from "@/lib/languageRoutes";
 import { canonicalUrl } from "@/lib/seo";
 
 export const dynamic = "force-static";
@@ -11,21 +8,53 @@ export const dynamic = "force-static";
 const lastModified = new Date("2026-05-11");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = [
-    "/",
-    "/en/",
-    "/servicios/", "/en/services/",
-    "/ubicaciones/", "/en/locations/",
-    "/precios/", "/en/prices/",
-    "/faq/", "/en/faq/",
-    "/blog/", "/en/blog/",
-    ...realEstateCities.flatMap((city) => [cityPath(city), cityPath(city, "en")]),
-    ...realEstateServices.flatMap((service) => [servicePath(service), servicePath(service, "en")]),
-    ...realEstateIndustries.flatMap((industry) => [industryPath(industry), industryPath(industry, "en")]),
-    ...blogPosts.flatMap((post) => [`/${post.slug}`, `/en/${post.enSlug}`]),
-    ...articles.map((a) => `/blog/${a.slug}/`),
-    ...articlesWithEn.map((a) => `/en/blog/${a.en!.enSlug}/`)
-  ];
+  const entries: MetadataRoute.Sitemap = [];
 
-  return paths.map((path) => ({ url: canonicalUrl(path), lastModified }));
+  const pairs = allLanguageRoutePairs();
+  const pairedEsPaths = new Set(pairs.map((p) => p.es));
+  const pairedEnPaths = new Set(pairs.map((p) => p.en));
+
+  // ── 1. Bilingual route pairs (from languageRoutes.ts) ───────────────────
+  // Covers: static pages, cities, services, industries, blogPosts, articlesWithEn.
+  // Each pair emitted twice (ES + EN URL), both with xhtml:link alternates.
+  for (const { es, en } of pairs) {
+    entries.push({
+      url: canonicalUrl(es),
+      lastModified,
+      alternates: {
+        languages: {
+          "es-DO": canonicalUrl(es),
+          "es": canonicalUrl(es),
+          "en": canonicalUrl(en),
+          "x-default": canonicalUrl(es)
+        }
+      }
+    });
+    entries.push({
+      url: canonicalUrl(en),
+      lastModified,
+      alternates: {
+        languages: {
+          "es-DO": canonicalUrl(es),
+          "es": canonicalUrl(es),
+          "en": canonicalUrl(en),
+          "x-default": canonicalUrl(es)
+        }
+      }
+    });
+  }
+
+  // ── 2. Spanish-only articles (no EN counterpart) ─────────────────────────
+  for (const a of articles) {
+    const esPath = `/blog/${a.slug}/`;
+    if (pairedEsPaths.has(esPath)) continue;
+    entries.push({ url: canonicalUrl(esPath), lastModified });
+  }
+  for (const a of articles.filter((x) => x.en?.enSlug)) {
+    const enPath = `/en/blog/${a.en!.enSlug}/`;
+    if (pairedEnPaths.has(enPath)) continue;
+    entries.push({ url: canonicalUrl(enPath), lastModified });
+  }
+
+  return entries;
 }
