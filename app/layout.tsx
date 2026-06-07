@@ -17,6 +17,9 @@ const routePairsJson = JSON.stringify(
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  verification: {
+    google: "O1tSOujyggdY8fJKs7scDwU6Gwfs_aEH9YSWLMHg1kw"
+  },
   title: {
     default: "Fotografia Inmobiliaria Profesional RD | Babula Shots",
     template: "%s"
