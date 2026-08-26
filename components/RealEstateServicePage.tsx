@@ -297,7 +297,7 @@ export function RealEstateServicePage({ service, locale = "es" }: { service: Rea
 
       <ServicePackages locale={locale} />
       <Integrations locale={locale} />
-      <FaqBlock items={faq} />
+      <FaqBlock items={faq} locale={locale} />
 
       <section className="section">
         <div className="wrap">

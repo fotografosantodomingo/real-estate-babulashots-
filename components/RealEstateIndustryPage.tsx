@@ -225,7 +225,7 @@ export function RealEstateIndustryPage({ industry, locale = "es" }: { industry: 
         </div>
       </section>
       <Integrations locale={locale} />
-      <FaqBlock items={faq} />
+      <FaqBlock items={faq} locale={locale} />
       <section className="section alt-section">
         <div className="wrap">
           <div className="section-heading">

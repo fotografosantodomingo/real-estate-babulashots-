@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { bodaUrl, droneUrl, email, mainBrandUrl, niche, phoneDisplay, santoDomingoHubUrl, siteUrl } from "@/lib/seo";
 import { cityPath, realEstateCities } from "@/lib/realEstateCities";
 
@@ -29,6 +31,8 @@ const alsoAtLinks: Array<{ label: string; href: string; primary: string; descrip
 ];
 
 export function SiteFooter() {
+  const pathname = usePathname() || "/";
+  const isEnglish = pathname.startsWith("/en");
   return (
     <footer className="site-footer">
       <div className="footer-top">
@@ -93,7 +97,7 @@ export function SiteFooter() {
         <p className="footer-section-title">Areas que servimos</p>
         <div>
           {realEstateCities.map((city) => (
-            <Link href={cityPath(city)} key={city.slug}>
+            <Link href={cityPath(city, isEnglish ? "en" : "es")} key={city.slug}>
               {city.city}
             </Link>
           ))}
