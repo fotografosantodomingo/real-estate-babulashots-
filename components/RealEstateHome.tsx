@@ -172,6 +172,50 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
       <section className="section">
         <div className="wrap">
           <div className="section-heading">
+            <p className="section-tag">{isEnglish ? "Video" : "Video"}</p>
+            <h2>
+              {isEnglish
+                ? "This is what our drone photo and video work looks like"
+                : "Así se ve nuestro trabajo con foto y video de drone"}
+            </h2>
+          </div>
+          <div className="video-showcase-grid">
+            <div className="video-embed">
+              <iframe
+                src="https://www.youtube.com/embed/YLyQBy59bPY"
+                title={
+                  isEnglish
+                    ? "Aerial photography and video with drone in the Dominican Republic | Babula Shots"
+                    : "Fotografía y Video Aéreo con Dron en República Dominicana | Babula Shots"
+                }
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+            <figure className="video-showcase-photo">
+              <img
+                src="https://res.cloudinary.com/dwewurxla/image/upload/f_auto,q_auto/v1788269001/Servicio_Drone_Para_Bienes_Raiices_Republica_dominicana_Babula_2_n83bnu.webp"
+                alt={
+                  isEnglish
+                    ? "Aerial drone photo of a villa in the Dominican Republic, shot for a real estate listing"
+                    : "Foto aérea con drone de una villa en República Dominicana, tomada para un listado inmobiliario"
+                }
+                loading="lazy"
+              />
+              <figcaption>
+                {isEnglish
+                  ? "Example still from a real drone session"
+                  : "Ejemplo real de una sesión con drone"}
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="wrap">
+          <div className="section-heading">
             <p className="section-tag">{isEnglish ? "Services" : "Servicios"}</p>
             <h2>{isEnglish ? "Media built to publish listings faster" : "Contenido para publicar propiedades mejor y mas rapido"}</h2>
           </div>

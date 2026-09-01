@@ -643,6 +643,45 @@ p {
   border-bottom: 2px solid currentColor;
 }
 
+/* ===== Video showcase (homepage, above Servicios) ===== */
+.video-showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+.video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--panel);
+}
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-showcase-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+.video-showcase-photo figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+@media (min-width: 900px) {
+  .video-showcase-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
