@@ -143,7 +143,21 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
     breadcrumbSchema([
       { name: "Babula Shots", item: mainBrandUrl },
       { name: isEnglish ? "Real Estate" : "Inmobiliaria", path: homePath }
-    ])
+    ]),
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      name: isEnglish
+        ? "Aerial photography and video with drone in the Dominican Republic | Babula Shots"
+        : "Fotografía y Video Aéreo con Dron en República Dominicana | Babula Shots",
+      description: isEnglish
+        ? "Real estate photography and video, drone and listing content for agents, developers, Airbnb hosts, villas and commercial properties."
+        : "Foto, video, drone y contenido para agentes, desarrolladores, Airbnb, villas y propiedades comerciales.",
+      thumbnailUrl: "https://i.ytimg.com/vi/YLyQBy59bPY/hqdefault.jpg",
+      uploadDate: "2026-09-01T05:59:59-07:00",
+      embedUrl: "https://www.youtube.com/embed/YLyQBy59bPY",
+      publisher: { "@id": `${siteUrl}#organization` }
+    }
   ];
 
   return (
