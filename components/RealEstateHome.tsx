@@ -219,8 +219,8 @@ export function RealEstateHome({ locale = "es" }: { locale?: "es" | "en" }) {
               />
               <figcaption>
                 {isEnglish
-                  ? "Example still from a real drone session"
-                  : "Ejemplo real de una sesión con drone"}
+                  ? "Straight from the drone, delivered to the client without heavy retouching"
+                  : "Tal como sale del drone, entregada al cliente sin retoque exagerado"}
               </figcaption>
             </figure>
           </div>
